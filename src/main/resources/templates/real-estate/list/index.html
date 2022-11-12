@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>物件登録画面</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="common/header :: header_fragment"></div>
+<div class="container">
+    <div th:replace="common/notice :: notice_fragment"></div>
+    <form th:action="@{/real-estate/list}" th:object="${s0004Form}" method="post">
+        <div class="form-group form-inline input-group-sm">
+            <label for="reName" class="col-md-2 control-label">物件名</label>
+            <input type="text" class="form-control col-md-6" id="reName" name="reName">
+        </div>
+        <div class="form-group form-inline input-group-sm">
+            <label for="area" class="col-md-2 control-label">エリア</label>
+            <select class="form-control col-md-2" id="area" th:field="*{area}">
+                <option th:each="area : ${areas}" th:value="${area}" th:selected="${area == defaultArea}">[[${area}]]
+                </option>
+            </select>
+        </div>
+        <div class="form-group form-inline input-group-sm">
+            <label for="rentPrice" class="col-md-2 control-label">家賃</label>
+            <input type="number" class="form-control col-md-2" id="rentPrice" name="rentPrice">　以下
+        </div>
+        <div class="form-group form-inline input-group-sm">
+            <label for="foreignerLiveSts" class="col-md-2 control-label">エリア</label>
+            <select class="form-control col-md-2" id="foreignerLiveSts" th:field="*{foreignerLiveSts}">
+                <option value="1">未確認</option>
+                <option value="2">入居可</option>
+                <option value="3">入居不可</option>
+            </select>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-sm btn-outline-secondary" type="submit">検索</button>
+        </div>
+    </form>
+    <hr>
+
+    <table class="table table-fixed">
+        <thead class="sticky-top">
+        <tr>
+            <th class="col-xs-2"></th>
+            <th class="col-xs-2">物件名</th>
+            <th class="col-xs-4">住所</th>
+            <th class="col-xs-1">家賃</th>
+            <th class="col-xs-1">管理会社</th>
+            <th class="col-xs-1">管理会社TEL</th>
+            <th class="col-xs-1">外国人入居可否</th>
+            <th class="col-xs-1">更新日</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="row : ${rows}">
+            <td>
+                <a th:href="@{/real-estate/detail(reId=${row.reId})}">Edit</a>
+            </td>
+            <td class="col-xs-2" th:text="${row.reName}"></td>
+            <td class="col-xs-2" th:text="${row.address}"></td>
+            <td class="col-xs-2" th:text="${row.rentPrice}"></td>
+            <td class="col-xs-2" th:text="${row.mgrCompanyName}"></td>
+            <td class="col-xs-2" th:text="${row.mgrCompanyTel}"></td>
+            <td class="col-xs-2" th:text="${row.foreignerLiveSts}"></td>
+            <td class="col-xs-2" th:text="${row.updatedAt}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

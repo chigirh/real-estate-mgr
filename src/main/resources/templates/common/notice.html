@@ -1,0 +1,14 @@
+<div th:fragment="notice_fragment">
+    <div class="alert alert-info" th:if="${notice.info != null}">
+        <strong th:text="${notice.info}"></strong>
+    </div>
+    <div class="alert alert-success" th:if="${notice.success != null}">
+        <strong th:text="${notice.success}"></strong>
+    </div>
+    <div class="alert alert-warning" th:if="${notice.warn != null}">
+        <strong th:text="${notice.warn}"></strong>
+    </div>
+    <div class="alert alert-danger" th:if="${notice.error != null}">
+        <strong th:text="${notice.error}"></strong>
+    </div>
+</div>
