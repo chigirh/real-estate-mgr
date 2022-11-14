@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chigirh.eh.rem.infra.mapper.RealEstateMapper">
+    <insert id="insert">
+        INSERT INTO real_estate (
+            re_id,
+            re_name,
+            re_name_kana,
+            initials,
+            address,
+            rent_price,
+            mgr_company_name,
+            mgr_company_tel,
+            foreigner_live_sts,
+            pdf,
+            note,
+            updated_at
+        ) VALUES (
+            #{entity.reId},
+            #{entity.reName},
+            #{entity.reNameKana},
+            #{entity.initial},
+            #{entity.address},
+            #{entity.rentPrice},
+            #{entity.mgrCompanyName},
+            #{entity.mgrCompanyTel},
+            #{entity.foreignerLiveSts},
+            #{entity.pdf},
+            #{entity.note},
+            #{entity.updatedAt}
+        )
+    </insert>
+
+    <sql id="all_columns">
+        re_id,
+        re_name,
+        re_name_kana,
+        initials,
+        address,
+        rent_price,
+        mgr_company_name,
+        mgr_company_tel,
+        foreigner_live_sts,
+        pdf,
+        note,
+        updated_at
+    </sql>
+
+    <update id="updateByKey">
+        UPDATE real_estate
+        SET
+            re_name = #{entity.reName},
+            re_name_kana = #{entity.reNameKana},
+            initials = #{entity.initial},
+            address = #{entity.address},
+            rent_price = #{entity.rentPrice},
+            mgr_company_name = #{entity.mgrCompanyName},
+            mgr_company_tel = #{entity.mgrCompanyTel},
+            foreigner_live_sts = #{entity.foreignerLiveSts},
+            pdf = #{entity.pdf},
+            note = #{entity.note},
+            updated_at = #{entity.updatedAt}
+        WHERE re_id = #{entity.reId}
+    </update>
+
+    <select id="findByCondition"
+            resultType="com.chigirh.eh.rem.infra.entity.RealEstateEntity">
+        SELECT DISTINCT
+            t1.re_id,
+            t1.re_name,
+            t1.re_name_kana,
+            t1.initials,
+            t1.address,
+            t1.rent_price,
+            t1.mgr_company_name,
+            t1.mgr_company_tel,
+            t1.foreigner_live_sts,
+            t1.pdf,
+            t1.note,
+            t1.updated_at
+        FROM real_estate AS t1
+        INNER JOIN real_estate_area AS t2
+        ON t1.re_id = t2.re_id
+        <where>
+            <if test="condition.reName != null">
+                t1.re_name LIKE #{condition.reName}
+            </if>
+            <if test="condition.area != null">
+                AND t2.area = #{condition.area}
+            </if>
+            <if test="condition.rentPrice != null">
+                AND t1.rent_price &lt;= #{condition.rentPrice}
+            </if>
+            <if test="condition.foreignerLiveSts != null">
+                AND foreigner_live_sts = #{condition.foreignerLiveSts}
+            </if>
+        </where>
+        ORDER BY t1.updated_at desc
+    </select>
+
+    <select id="findByKey"
+            resultType="com.chigirh.eh.rem.infra.entity.RealEstateEntity">
+        SELECT
+            <include refid="all_columns" />
+        FROM real_estate
+        WHERE re_id = #{reId}
+    </select>
+</mapper>

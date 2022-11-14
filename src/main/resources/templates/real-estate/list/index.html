@@ -28,10 +28,10 @@
         </div>
         <div class="form-group form-inline input-group-sm">
             <label for="rentPrice" class="col-md-2 control-label">家賃</label>
-            <input type="number" class="form-control col-md-2" id="rentPrice" name="rentPrice">　以下
+            <input type="number" class="form-control col-md-2" id="rentPrice" min="10000" step="1000" name="rentPrice">　以下
         </div>
         <div class="form-group form-inline input-group-sm">
-            <label for="foreignerLiveSts" class="col-md-2 control-label">エリア</label>
+            <label for="foreignerLiveSts" class="col-md-2 control-label">外国人入居可否</label>
             <select class="form-control col-md-2" id="foreignerLiveSts" th:field="*{foreignerLiveSts}">
                 <option value="1">未確認</option>
                 <option value="2">入居可</option>
