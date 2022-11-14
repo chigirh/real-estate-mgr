@@ -4,6 +4,7 @@ import com.chigirh.eh.rem.domain.model.RealEstate;
 import com.chigirh.eh.rem.domain.repository.RealEstateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -11,6 +12,7 @@ public class RealEstatcFetchPort {
 
     private final RealEstateRepository realEstateRepository;
 
+    @Transactional
     public Output useCase(Input input) {
         var result = realEstateRepository.fetchByReId(input.reId);
         return new Output(result);

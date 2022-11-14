@@ -4,6 +4,7 @@ import com.chigirh.eh.rem.domain.model.RealEstate;
 import com.chigirh.eh.rem.domain.repository.RealEstateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +14,7 @@ public class RealEstateUpdatePort {
 
     private final RealEstateRepository realEstateRepository;
 
+    @Transactional
     public Output useCase(Input input) {
         var model = input.model;
         model.setUpdatedAt(LocalDateTime.now());

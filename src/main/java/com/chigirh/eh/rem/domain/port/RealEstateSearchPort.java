@@ -7,6 +7,7 @@ import com.chigirh.eh.rem.domain.repository.RealEstateRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class RealEstateSearchPort {
 
     private final RealEstateRepository realEstateRepository;
 
+    @Transactional
     public Output useCase(Input input) {
         var condition = input.condition();
         if (AreasConst.DEFAULT.equals(condition.getArea())) {

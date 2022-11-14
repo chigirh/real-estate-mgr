@@ -1,2 +1,18 @@
 server:
   port: "8080"
+
+spring:
+  datasource:
+    url: "${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/re_mgr}"
+    username: "${SPRING_DATASOURCE_USERNAME:app}"
+    password: "${SPRING_DATASOURCE_PASSWORD:secret}"
+    driver-class-name: "com.mysql.cj.jdbc.Driver"
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: "classpath*:/mybatis/sql/**/*.xml"
+
+logging:
+  level:
+    root: INFO
