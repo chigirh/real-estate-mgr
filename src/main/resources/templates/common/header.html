@@ -1,6 +1,8 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="header_fragment">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="header_fragment"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <a class="navbar-brand text-dark" href="#">Real Estate Management</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -9,5 +11,6 @@
             <a class="nav-link text-dark" href="/real-estate/list">List</a>
             <a class="nav-link text-dark" href="#contact">Contact</a>
         </div>
+<!--        <div class="navbar-collapse justify-content-end"><span sec:authentication="principal.attributes['name']"></span></div>-->
     </div>
 </nav>

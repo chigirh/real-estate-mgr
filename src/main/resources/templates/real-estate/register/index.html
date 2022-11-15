@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>物件登録画面</title>
@@ -14,8 +14,9 @@
 <div th:replace="common/header :: header_fragment"></div>
 <div class="container">
     <hr>
-    <form class="container mb-15" th:action="@{/real-estate/register}" th:object="${s0003Form}" method="post"
-          enctype="multipart/form-data">
+    <form class="container mb-15" th:action="@{/real-estate/register}" th:object="${s0003Form}"
+          sec:authorize="hasRole('ROLE_ADMIN')"
+          method="post" enctype="multipart/form-data">
         <div class="form-group form-inline input-group-sm">
             <span class="col-md-2 text-md-right">物件名</span>
             <input type="text" class="form-control col-sm-7" id="reName" th:field="*{reName}">

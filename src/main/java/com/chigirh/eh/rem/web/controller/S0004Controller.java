@@ -10,6 +10,8 @@ import com.chigirh.eh.rem.web.dto.S0004Form;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,7 +35,7 @@ public class S0004Controller {
     private final S0004Converter converter;
 
     @GetMapping("/real-estate/list")
-    public String index(Notice notice, S0004Form s0004Form, Model model) {
+    public String index(@AuthenticationPrincipal OidcUser user, Notice notice, S0004Form s0004Form, Model model) {
 
         model.addAttribute("areas", realEstateService.fetchAreas());
         model.addAttribute("defaultArea", AreasConst.DEFAULT);
@@ -42,7 +44,12 @@ public class S0004Controller {
     }
 
     @PostMapping("/real-estate/list")
-    public String submit(@Validated @ModelAttribute S0004Form s0004Form, BindingResult result, Model model) {
+    public String submit(
+        @AuthenticationPrincipal OidcUser user,
+        @Validated @ModelAttribute S0004Form s0004Form,
+        BindingResult result,
+        Model model
+    ) {
 
         var condition = new RealEstateSearchCondition();
         condition.setReName(s0004Form.getReName());
@@ -62,6 +69,6 @@ public class S0004Controller {
 
         model.addAttribute("rows", rows);
 
-        return index(notice, s0004Form, model);
+        return index(user, notice, s0004Form, model);
     }
 }

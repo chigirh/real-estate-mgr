@@ -1,4 +1,4 @@
-<div th:fragment="notice_fragment">
+<div th:fragment="notice_fragment" xmlns:th="http://www.thymeleaf.org">
     <div class="alert alert-info" th:if="${notice.info != null}">
         <strong th:text="${notice.info}"></strong>
     </div>
