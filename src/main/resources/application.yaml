@@ -12,8 +12,8 @@ spring:
       client:
         registration:
           google:
-            client-id: "${GOOGLE_CLIENT_ID:91083308965-gdg5ifoj7tt90fh8sm626606gva7pnmk.apps.googleusercontent.com}"
-            client-secret: "${GOOGLE_CLIENT_SECRET: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}"
+            client-id: "${GOOGLE_CLIENT_ID:559368435968-4vqpn2iodhjrb7f6goch6uc58fcckpub.apps.googleusercontent.com}"
+            client-secret: "${GOOGLE_CLIENT_SECRET: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}"
 
 mybatis:
   configuration:

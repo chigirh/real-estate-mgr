@@ -16,7 +16,7 @@
     <div th:replace="common/notice :: notice_fragment"></div>
     <hr>
     <div class="card-deck">
-        <div class="card" sec:authorize="hasRole('ROLE_ADMIN')">
+        <div class="card" th:if="${role.hasRole('ROLE_ADMIN')}">
             <a class="nav-link text-dark" href="/real-estate/register">
                 <img th:src="@{/image/s0002_card.jpg}" class="card-img-top" alt="...">
             </a>
@@ -25,7 +25,7 @@
                 <p class="card-text">物件を登録する</p>
             </div>
         </div>
-        <div class="card" sec:authorize="hasRole('ROLE_USER')">
+        <div class="card" th:if="${role.hasRole('ROLE_USER')}">
             <a class="nav-link text-dark" href="/real-estate/list">
                 <img th:src="@{/image/s0002_card.jpg}" class="card-img-top" alt="...">
             </a>

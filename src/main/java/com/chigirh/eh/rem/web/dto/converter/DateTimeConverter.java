@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class DateTimeConverter {
-    private static DateTimeFormatter atDate = DateTimeFormatter.ofPattern("yyyy年MM月dd日");
+    private static DateTimeFormatter atDate = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
 
-    public static String convertAtDate(LocalDateTime localDateTime) {
+    public static String convertAtDateTime(LocalDateTime localDateTime) {
         return atDate.format(localDateTime);
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>物件詳細画面</title>
@@ -97,7 +97,7 @@
         <div class="form-group form-inline">
             <input type="hidden" class="form-control col-sm-5" th:field="*{pdf}">
         </div>
-        <div class="text-center" sec:authorize="hasRole('ROLE_ADMIN')">
+        <div class="text-center" th:if="${role.hasRole('ROLE_ADMIN')}">
             <button class="btn btn-sm btn-outline-primary" type="submit">更新</button>
         </div>
     </form>

@@ -4,6 +4,7 @@ import com.chigirh.eh.rem.domain.port.RealEstateCreatePort;
 import com.chigirh.eh.rem.web.converter.S0003Converter;
 import com.chigirh.eh.rem.web.dto.Notice;
 import com.chigirh.eh.rem.web.dto.S0003Form;
+import com.chigirh.eh.rem.web.facade.UserRoleFacade;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,20 +27,15 @@ public class S0003Controller {
 
     private static final Logger log = LoggerFactory.getLogger(S0003Controller.class);
 
+    private final UserRoleFacade userRoleFacade;
+
     private final RealEstateCreatePort realEstateCreatePort;
 
     private final S0003Converter converter;
 
     @GetMapping("/real-estate/register")
     public String index(@AuthenticationPrincipal OidcUser user, S0003Form s0003Form, Model model) {
-
-
-        s0003Form.setReName("物件");
-        s0003Form.setReNameKana("ブッケン");
-        s0003Form.setArea1("吉塚");
-        s0003Form.setAddress("住所");
-        s0003Form.setRentPrice(50000);
-
+        userRoleFacade.setRoles(user, model);
         return "real-estate/register/index";
     }
 

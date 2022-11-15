@@ -21,7 +21,7 @@ public class S0004Converter {
                     e.getMgrCompanyName(),
                     e.getMgrCompanyTel(),
                     ForeignerLiveSts.of(e.getForeignerLiveSts()).getName(),
-                    DateTimeConverter.convertAtDate(e.getUpdatedAt())
+                    DateTimeConverter.convertAtDateTime(e.getUpdatedAt())
                 )
             ).collect(Collectors.toList());
     }

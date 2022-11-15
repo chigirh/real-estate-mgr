@@ -15,7 +15,7 @@
 <div class="container">
     <hr>
     <form class="container mb-15" th:action="@{/real-estate/register}" th:object="${s0003Form}"
-          sec:authorize="hasRole('ROLE_ADMIN')"
+          th:if="${role.hasRole('ROLE_ADMIN')}"
           method="post" enctype="multipart/form-data">
         <div class="form-group form-inline input-group-sm">
             <span class="col-md-2 text-md-right">物件名</span>

@@ -5,6 +5,7 @@ import com.chigirh.eh.rem.domain.port.RealEstateUpdatePort;
 import com.chigirh.eh.rem.web.converter.S0005Converter;
 import com.chigirh.eh.rem.web.dto.Notice;
 import com.chigirh.eh.rem.web.dto.S0005Form;
+import com.chigirh.eh.rem.web.facade.UserRoleFacade;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,8 @@ public class S0005Controller {
 
     private static final Logger log = LoggerFactory.getLogger(S0005Controller.class);
 
+    private final UserRoleFacade userRoleFacade;
+
     private final S0004Controller s0004Controller;
 
     private final RealEstatcFetchPort realEstatcFetchPort;
@@ -43,6 +46,7 @@ public class S0005Controller {
         @ModelAttribute S0005Form s0005Form,
         Model model
     ) {
+        userRoleFacade.setRoles(user, model);
 
         var input = new RealEstatcFetchPort.Input(reId);
         var output = realEstatcFetchPort.useCase(input);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>物件登録画面</title>
@@ -33,9 +33,9 @@
         <div class="form-group form-inline input-group-sm">
             <label for="foreignerLiveSts" class="col-md-2 control-label">外国人入居可否</label>
             <select class="form-control col-md-2" id="foreignerLiveSts" th:field="*{foreignerLiveSts}">
-                <option value="1" sec:authorize="hasRole('ROLE_ADMIN')">未確認</option>
-                <option value="2" sec:authorize="hasRole('ROLE_USER')">入居可</option>
-                <option value="3" sec:authorize="hasRole('ROLE_ADMIN')">入居不可</option>
+                <option value="1" th:if="${role.hasRole('ROLE_ADMIN')}">未確認</option>
+                <option value="2" th:if="${role.hasRole('ROLE_USER')}">入居可</option>
+                <option value="3" th:if="${role.hasRole('ROLE_ADMIN')}">入居不可</option>
             </select>
         </div>
         <div class="text-center">

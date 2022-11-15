@@ -7,6 +7,7 @@ import com.chigirh.eh.rem.domain.service.RealEstateService;
 import com.chigirh.eh.rem.web.converter.S0004Converter;
 import com.chigirh.eh.rem.web.dto.Notice;
 import com.chigirh.eh.rem.web.dto.S0004Form;
+import com.chigirh.eh.rem.web.facade.UserRoleFacade;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,8 @@ public class S0004Controller {
 
     private static final Logger log = LoggerFactory.getLogger(S0004Controller.class);
 
+    private final UserRoleFacade userRoleFacade;
+
     private final RealEstateService realEstateService;
     private final RealEstateSearchPort realEstateSearchPort;
 
@@ -36,6 +39,7 @@ public class S0004Controller {
 
     @GetMapping("/real-estate/list")
     public String index(@AuthenticationPrincipal OidcUser user, Notice notice, S0004Form s0004Form, Model model) {
+        userRoleFacade.setRoles(user, model);
 
         model.addAttribute("areas", realEstateService.fetchAreas());
         model.addAttribute("defaultArea", AreasConst.DEFAULT);
