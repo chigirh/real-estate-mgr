@@ -7,6 +7,8 @@ import com.chigirh.eh.rem.web.dto.S0003Form;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,7 +31,7 @@ public class S0003Controller {
     private final S0003Converter converter;
 
     @GetMapping("/real-estate/register")
-    public String index(S0003Form s0003Form, Model model) {
+    public String index(@AuthenticationPrincipal OidcUser user, S0003Form s0003Form, Model model) {
 
 
         s0003Form.setReName("物件");
@@ -43,12 +45,13 @@ public class S0003Controller {
 
     @PostMapping("/real-estate/register")
     public String submit(
+        @AuthenticationPrincipal OidcUser user,
         @Validated @ModelAttribute S0003Form s0003Form,
         BindingResult result,
         Model model) {
 
         if (result.hasErrors()) {
-            return index(s0003Form, model);
+            return index(user,s0003Form, model);
         }
 
         var input = converter.convert(s0003Form);

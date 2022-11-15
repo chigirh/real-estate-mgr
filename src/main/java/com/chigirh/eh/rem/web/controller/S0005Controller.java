@@ -8,6 +8,8 @@ import com.chigirh.eh.rem.web.dto.S0005Form;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,6 +37,7 @@ public class S0005Controller {
 
     @GetMapping("/real-estate/detail")
     public String index(
+        @AuthenticationPrincipal OidcUser user,
         Notice notice,
         @RequestParam("reId") String reId,
         @ModelAttribute S0005Form s0005Form,
@@ -61,6 +64,7 @@ public class S0005Controller {
 
     @PostMapping("/real-estate/detail")
     public String submit(
+        @AuthenticationPrincipal OidcUser user,
         Notice notice,
         @RequestParam("reId") String reId,
         @Validated @ModelAttribute S0005Form s0005Form,
@@ -82,7 +86,7 @@ public class S0005Controller {
         }
         model.addAttribute("notice", notice);
 
-        return index(notice, reId, s0005Form, model);
+        return index(user, notice, reId, s0005Form, model);
 
     }
 

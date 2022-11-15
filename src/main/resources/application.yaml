@@ -7,6 +7,13 @@ spring:
     username: "${SPRING_DATASOURCE_USERNAME:app}"
     password: "${SPRING_DATASOURCE_PASSWORD:secret}"
     driver-class-name: "com.mysql.cj.jdbc.Driver"
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: "${GOOGLE_CLIENT_ID:91083308965-gdg5ifoj7tt90fh8sm626606gva7pnmk.apps.googleusercontent.com}"
+            client-secret: "${GOOGLE_CLIENT_SECRET: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}"
 
 mybatis:
   configuration:
@@ -16,3 +23,15 @@ mybatis:
 logging:
   level:
     root: INFO
+
+re-mgr:
+  users:
+    - name: "admin"
+      password: "admin"
+      roles:
+        - "ADMIN"
+        - "USER"
+    - name: "user"
+      password: "user"
+      roles:
+        - "USER"
