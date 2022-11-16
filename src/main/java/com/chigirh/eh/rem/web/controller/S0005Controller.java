@@ -29,8 +29,6 @@ public class S0005Controller {
 
     private static final Logger log = LoggerFactory.getLogger(S0005Controller.class);
 
-    private final UserRoleFacade userRoleFacade;
-
     private final S0004Controller s0004Controller;
 
     private final RealEstatcFetchPort realEstatcFetchPort;
@@ -46,8 +44,6 @@ public class S0005Controller {
         @ModelAttribute S0005Form s0005Form,
         Model model
     ) {
-        userRoleFacade.setRoles(user, model);
-
         var input = new RealEstatcFetchPort.Input(reId);
         var output = realEstatcFetchPort.useCase(input);
 
@@ -75,7 +71,6 @@ public class S0005Controller {
         BindingResult result,
         Model model
     ) {
-
         if (result.hasErrors()) {
             return "real-estate/detail/index";
         }

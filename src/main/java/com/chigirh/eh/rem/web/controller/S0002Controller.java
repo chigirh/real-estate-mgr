@@ -17,11 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class S0002Controller {
 
-    private final UserRoleFacade userRoleFacade;
-
     @GetMapping("/")
     public String index(@AuthenticationPrincipal OidcUser user, Notice notice, Model model) {
-        userRoleFacade.setRoles(user, model);
         return "home/index";
     }
 }

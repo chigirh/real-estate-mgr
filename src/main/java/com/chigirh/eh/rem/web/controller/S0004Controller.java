@@ -30,8 +30,6 @@ public class S0004Controller {
 
     private static final Logger log = LoggerFactory.getLogger(S0004Controller.class);
 
-    private final UserRoleFacade userRoleFacade;
-
     private final RealEstateService realEstateService;
     private final RealEstateSearchPort realEstateSearchPort;
 
@@ -39,8 +37,6 @@ public class S0004Controller {
 
     @GetMapping("/real-estate/list")
     public String index(@AuthenticationPrincipal OidcUser user, Notice notice, S0004Form s0004Form, Model model) {
-        userRoleFacade.setRoles(user, model);
-
         model.addAttribute("areas", realEstateService.fetchAreas());
         model.addAttribute("defaultArea", AreasConst.DEFAULT);
 
@@ -54,7 +50,6 @@ public class S0004Controller {
         BindingResult result,
         Model model
     ) {
-
         var condition = new RealEstateSearchCondition();
         condition.setReName(s0004Form.getReName());
         condition.setArea(s0004Form.getArea());

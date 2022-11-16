@@ -27,15 +27,12 @@ public class S0003Controller {
 
     private static final Logger log = LoggerFactory.getLogger(S0003Controller.class);
 
-    private final UserRoleFacade userRoleFacade;
-
     private final RealEstateCreatePort realEstateCreatePort;
 
     private final S0003Converter converter;
 
     @GetMapping("/real-estate/register")
     public String index(@AuthenticationPrincipal OidcUser user, S0003Form s0003Form, Model model) {
-        userRoleFacade.setRoles(user, model);
         return "real-estate/register/index";
     }
 
