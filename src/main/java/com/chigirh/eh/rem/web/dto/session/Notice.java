@@ -38,7 +38,7 @@ public class Notice {
         if (info.isEmpty()) {
             return null;
         }
-        var message = String.join("^r^n", info);
+        var message = String.join("\r\n", info);
         info.clear();
         return message;
     }
@@ -51,7 +51,7 @@ public class Notice {
         if (success.isEmpty()) {
             return null;
         }
-        var message = String.join("^r^n", success);
+        var message = String.join("\r\n", success);
         success.clear();
         return message;
     }
@@ -64,7 +64,7 @@ public class Notice {
         if (warn.isEmpty()) {
             return null;
         }
-        var message = String.join("^r^n", warn);
+        var message = String.join("\r\n", warn);
         warn.clear();
         return message;
     }
@@ -77,7 +77,7 @@ public class Notice {
         if (error.isEmpty()) {
             return null;
         }
-        var message = String.join("^r^n", error);
+        var message = String.join("\r\n", error);
         error.clear();
         return message;
     }
