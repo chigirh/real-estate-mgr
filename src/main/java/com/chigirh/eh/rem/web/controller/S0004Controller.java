@@ -5,9 +5,11 @@ import com.chigirh.eh.rem.domain.model.RealEstateSearchCondition;
 import com.chigirh.eh.rem.domain.port.RealEstateSearchPort;
 import com.chigirh.eh.rem.domain.service.RealEstateService;
 import com.chigirh.eh.rem.web.converter.S0004Converter;
-import com.chigirh.eh.rem.web.dto.Notice;
 import com.chigirh.eh.rem.web.dto.S0004Form;
-import com.chigirh.eh.rem.web.facade.UserRoleFacade;
+import com.chigirh.eh.rem.web.dto.S0004TableRow;
+import com.chigirh.eh.rem.web.dto.session.Notice;
+import com.chigirh.eh.rem.web.dto.session.S0004Condition;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,10 +37,31 @@ public class S0004Controller {
 
     private final S0004Converter converter;
 
+    private final Notice notice;
+
+    private final S0004Condition s0004Condition;
+
     @GetMapping("/real-estate/list")
-    public String index(@AuthenticationPrincipal OidcUser user, Notice notice, S0004Form s0004Form, Model model) {
+    public String index(
+        @AuthenticationPrincipal OidcUser user,
+        @ModelAttribute S0004Form s0004Form,
+        Model model
+    ) {
+        // conditions init.
         model.addAttribute("areas", realEstateService.fetchAreas());
         model.addAttribute("defaultArea", AreasConst.DEFAULT);
+
+        // condition restore.
+        s0004Form.setReName(s0004Condition.getReName());
+        s0004Form.setArea(s0004Condition.getArea());
+        s0004Form.setRentPrice(s0004Condition.getRentPrice());
+        s0004Form.setForeignerLiveSts(s0004Condition.getForeignerLiveSts());
+
+        // search
+        var rows = search(s0004Form);
+        model.addAttribute("rows", rows);
+
+        notice.info("検索結果" + rows.size() + "件");
 
         return "real-estate/list/index";
     }
@@ -50,6 +73,26 @@ public class S0004Controller {
         BindingResult result,
         Model model
     ) {
+        // conditions init.
+        model.addAttribute("areas", realEstateService.fetchAreas());
+        model.addAttribute("defaultArea", AreasConst.DEFAULT);
+
+        // search
+        var rows = search(s0004Form);
+        model.addAttribute("rows", rows);
+
+        notice.info("検索結果" + rows.size() + "件");
+
+        // condition cache
+        s0004Condition.setReName(s0004Form.getReName());
+        s0004Condition.setArea(s0004Form.getArea());
+        s0004Condition.setRentPrice(s0004Form.getRentPrice());
+        s0004Condition.setForeignerLiveSts(s0004Form.getForeignerLiveSts());
+
+        return "real-estate/list/index";
+    }
+
+    private List<S0004TableRow> search(S0004Form s0004Form) {
         var condition = new RealEstateSearchCondition();
         condition.setReName(s0004Form.getReName());
         condition.setArea(s0004Form.getArea());
@@ -59,15 +102,8 @@ public class S0004Controller {
         var input = new RealEstateSearchPort.Input(condition);
 
         var output = realEstateSearchPort.useCase(input);
-        var results = output.results();
-
-        var notice = Notice.builder().info("検索結果" + results.size() + "件").build();
-        model.addAttribute("notice", notice);
 
         var rows = converter.convert(output);
-
-        model.addAttribute("rows", rows);
-
-        return index(user, notice, s0004Form, model);
+        return rows;
     }
 }

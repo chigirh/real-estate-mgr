@@ -17,7 +17,7 @@
     <form th:action="@{/real-estate/list}" th:object="${s0004Form}" method="post">
         <div class="form-group form-inline input-group-sm">
             <label for="reName" class="col-md-2 control-label">物件名</label>
-            <input type="text" class="form-control col-md-6" id="reName" name="reName">
+            <input type="text" class="form-control col-md-6" id="reName" name="reName" th:field="*{reName}">
         </div>
         <div class="form-group form-inline input-group-sm">
             <label for="area" class="col-md-2 control-label">エリア</label>
@@ -28,7 +28,8 @@
         </div>
         <div class="form-group form-inline input-group-sm">
             <label for="rentPrice" class="col-md-2 control-label">家賃</label>
-            <input type="number" class="form-control col-md-2" id="rentPrice" min="10000" step="1000" name="rentPrice">　以下
+            <input type="number" class="form-control col-md-2" id="rentPrice" min="10000" step="1000" name="rentPrice"
+                   th:field="*{rentPrice}">　以下
         </div>
         <div class="form-group form-inline input-group-sm">
             <label for="foreignerLiveSts" class="col-md-2 control-label">外国人入居可否</label>

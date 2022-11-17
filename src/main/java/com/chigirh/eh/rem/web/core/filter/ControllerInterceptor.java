@@ -1,5 +1,6 @@
 package com.chigirh.eh.rem.web.core.filter;
 
+import com.chigirh.eh.rem.web.dto.session.Notice;
 import com.chigirh.eh.rem.web.facade.UserRoleFacade;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
@@ -20,6 +21,8 @@ public class ControllerInterceptor {
     private static Logger logger = LoggerFactory.getLogger(ControllerInterceptor.class);
 
     private final UserRoleFacade userRoleFacade;
+
+    private final Notice notice;
 
     @Before("execution(* com.chigirh.eh.rem.web.controller.*Controller.*(..))")
     public void setRoleIntercept(JoinPoint pjp) {
@@ -44,6 +47,7 @@ public class ControllerInterceptor {
         var model = (Model) argValues[modelIdx];
 
         userRoleFacade.setRoles(user, model);
+        model.addAttribute("notice", notice);
 
         logger.info("user id:{}", user.getEmail());
     }

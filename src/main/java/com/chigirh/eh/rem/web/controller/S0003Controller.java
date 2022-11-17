@@ -2,9 +2,8 @@ package com.chigirh.eh.rem.web.controller;
 
 import com.chigirh.eh.rem.domain.port.RealEstateCreatePort;
 import com.chigirh.eh.rem.web.converter.S0003Converter;
-import com.chigirh.eh.rem.web.dto.Notice;
 import com.chigirh.eh.rem.web.dto.S0003Form;
-import com.chigirh.eh.rem.web.facade.UserRoleFacade;
+import com.chigirh.eh.rem.web.dto.session.Notice;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +30,8 @@ public class S0003Controller {
 
     private final S0003Converter converter;
 
+    private final Notice notice;
+
     @GetMapping("/real-estate/register")
     public String index(@AuthenticationPrincipal OidcUser user, S0003Form s0003Form, Model model) {
         return "real-estate/register/index";
@@ -41,18 +42,17 @@ public class S0003Controller {
         @AuthenticationPrincipal OidcUser user,
         @Validated @ModelAttribute S0003Form s0003Form,
         BindingResult result,
-        Model model) {
-
+        Model model
+    ) {
         if (result.hasErrors()) {
-            return index(user,s0003Form, model);
+            return index(user, s0003Form, model);
         }
 
         var input = converter.convert(s0003Form);
         realEstateCreatePort.useCase(input);
 
-        var notice = Notice.builder().success("物件の登録に成功").build();
-        model.addAttribute("notice", notice);
+        notice.success("物件の登録に成功");
 
-        return "home/index";
+        return "redirect:/";
     }
 }

@@ -89,6 +89,9 @@ public class RealEstateRepositoryImpl implements RealEstateRepository {
     @DataAccess(process = "real_estate find.")
     public RealEstate fetchByReId(String reId) {
         var entity = realEstateMapper.findByKey(reId);
+        if (entity == null) {
+            return null;
+        }
         var model = toModel(entity);
 
         // area

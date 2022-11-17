@@ -1,8 +1,6 @@
 package com.chigirh.eh.rem.web.controller;
 
-import com.chigirh.eh.rem.domain.port.RealEstateCreatePort;
-import com.chigirh.eh.rem.web.dto.Notice;
-import com.chigirh.eh.rem.web.facade.UserRoleFacade;
+import com.chigirh.eh.rem.web.dto.session.Notice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -17,8 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class S0002Controller {
 
+    private final Notice notice;
+
     @GetMapping("/")
-    public String index(@AuthenticationPrincipal OidcUser user, Notice notice, Model model) {
+    public String index(@AuthenticationPrincipal OidcUser user, Model model) {
         return "home/index";
     }
 }

@@ -3,9 +3,8 @@ package com.chigirh.eh.rem.web.controller;
 import com.chigirh.eh.rem.domain.port.RealEstatcFetchPort;
 import com.chigirh.eh.rem.domain.port.RealEstateUpdatePort;
 import com.chigirh.eh.rem.web.converter.S0005Converter;
-import com.chigirh.eh.rem.web.dto.Notice;
 import com.chigirh.eh.rem.web.dto.S0005Form;
-import com.chigirh.eh.rem.web.facade.UserRoleFacade;
+import com.chigirh.eh.rem.web.dto.session.Notice;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,10 +35,11 @@ public class S0005Controller {
 
     private final S0005Converter converter;
 
+    private final Notice notice;
+
     @GetMapping("/real-estate/detail")
     public String index(
         @AuthenticationPrincipal OidcUser user,
-        Notice notice,
         @RequestParam("reId") String reId,
         @ModelAttribute S0005Form s0005Form,
         Model model
@@ -47,11 +47,10 @@ public class S0005Controller {
         var input = new RealEstatcFetchPort.Input(reId);
         var output = realEstatcFetchPort.useCase(input);
 
-
         if (output.result() == null) {
-            notice = Notice.builder().warn("登録されていない物件").build();
+            notice.warn("登録されていない物件");
             model.addAttribute("notice", notice);
-            return "real-estate/detail/index";
+            return "redirect:/real-estate/list";
         }
 
         converter.convert(s0005Form, output);
@@ -65,7 +64,6 @@ public class S0005Controller {
     @PostMapping("/real-estate/detail")
     public String submit(
         @AuthenticationPrincipal OidcUser user,
-        Notice notice,
         @RequestParam("reId") String reId,
         @Validated @ModelAttribute S0005Form s0005Form,
         BindingResult result,
@@ -79,13 +77,12 @@ public class S0005Controller {
         var output = realEstateUpdatePort.useCase(input);
 
         if (0 < output.result()) {
-            notice = Notice.builder().success("更新成功").build();
+            notice.success("更新成功");
         } else {
-            notice = Notice.builder().warn("更新失敗").build();
+            notice.warn("更新失敗");
         }
-        model.addAttribute("notice", notice);
 
-        return index(user, notice, reId, s0005Form, model);
+        return "redirect:/real-estate/list";
 
     }
 
