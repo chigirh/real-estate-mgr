@@ -15,8 +15,8 @@ import javax.validation.constraints.Pattern;
 @Target({ElementType.FIELD})
 @Documented
 @Constraint(validatedBy = {})
-@NotBlank(message = "{re-mgr.real-estate.validation.re-name-kana.message}")
-@Pattern(regexp = "^[\\u30A0-\\u30FF\\d]+$", message = "{re-mgr.real-estate.validation.re-name-kana.message}")
+@NotBlank(message = "{re-mgr.real-estate.validation.re-name-kana.message1}")
+@Pattern(regexp = "^[\\u30A0-\\u30FF\\d]+$", message = "{re-mgr.real-estate.validation.re-name-kana.message2}")
 public @interface RealEstateNameKana {
     String message() default "";
 
