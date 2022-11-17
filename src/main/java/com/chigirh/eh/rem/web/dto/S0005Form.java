@@ -1,31 +1,31 @@
 package com.chigirh.eh.rem.web.dto;
 
+import com.chigirh.eh.rem.web.dto.validation.annotation.Address;
+import com.chigirh.eh.rem.web.dto.validation.annotation.Area;
+import com.chigirh.eh.rem.web.dto.validation.annotation.RealEstateName;
+import com.chigirh.eh.rem.web.dto.validation.annotation.RealEstateNameKana;
+import com.chigirh.eh.rem.web.dto.validation.annotation.RentPrice;
+import com.chigirh.eh.rem.web.dto.validation.annotation.Tel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
 public class S0005Form {
-    @NotBlank
+    @RealEstateName
     private String reName;
-    @NotBlank
-    @Pattern(regexp = "^[\\u30A0-\\u30FF]+$")
+    @RealEstateNameKana
     private String reNameKana;
-    @NotBlank
+    @Area
     private String area1;
     private String area2;
     private String area3;
-    @NotBlank
+    @Address
     private String address;
-    @NotNull
+    @RentPrice
     private Integer rentPrice;
     private String mgrCompanyName;
-    @Size(max = 13)
+    @Tel
     private String mgrCompanyTel;
     private String foreignerLiveSts;
     private String pdf;
