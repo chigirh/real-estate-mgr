@@ -3,22 +3,23 @@ package com.chigirh.eh.rem.web.core.filter;
 import com.chigirh.eh.rem.web.dto.session.Notice;
 import com.chigirh.eh.rem.web.facade.UserRoleFacade;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.CodeSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
+@Slf4j
 @Aspect
 @Component
 @RequiredArgsConstructor
 public class ControllerInterceptor {
-
-    private static Logger logger = LoggerFactory.getLogger(ControllerInterceptor.class);
 
     private final UserRoleFacade userRoleFacade;
 
@@ -49,6 +50,17 @@ public class ControllerInterceptor {
         userRoleFacade.setRoles(user, model);
         model.addAttribute("notice", notice);
 
-        logger.info("user id:{}", user.getEmail());
+        var methodSignature = (MethodSignature) pjp.getSignature();
+        var method = methodSignature.getMethod();
+
+        var getMapping = method.getAnnotation(GetMapping.class);
+        if (getMapping != null) {
+            log.info("path:{},user id:{}", getMapping.value(), user.getEmail());
+        }
+
+        var postMapping = method.getAnnotation(PostMapping.class);
+        if (postMapping != null) {
+            log.info("path:{},user id:{}", postMapping.value(), user.getEmail());
+        }
     }
 }

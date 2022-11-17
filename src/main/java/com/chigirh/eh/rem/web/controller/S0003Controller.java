@@ -5,8 +5,7 @@ import com.chigirh.eh.rem.web.converter.S0003Converter;
 import com.chigirh.eh.rem.web.dto.S0003Form;
 import com.chigirh.eh.rem.web.dto.session.Notice;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
@@ -20,11 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 /**
  * S0003(物件登録画面).
  */
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class S0003Controller {
-
-    private static final Logger log = LoggerFactory.getLogger(S0003Controller.class);
 
     private final RealEstateCreatePort realEstateCreatePort;
 
@@ -52,6 +50,8 @@ public class S0003Controller {
         realEstateCreatePort.useCase(input);
 
         notice.success("物件の登録に成功");
+
+        log.info("register:{}", s0003Form);
 
         return "redirect:/";
     }
