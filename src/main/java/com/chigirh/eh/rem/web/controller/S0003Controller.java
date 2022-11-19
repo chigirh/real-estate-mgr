@@ -43,7 +43,7 @@ public class S0003Controller {
         Model model
     ) {
         if (result.hasErrors()) {
-            return index(user, s0003Form, model);
+            return "real-estate/register/index";
         }
 
         var input = converter.convert(s0003Form);
