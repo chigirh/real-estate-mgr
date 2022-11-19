@@ -14,7 +14,7 @@ import javax.validation.constraints.Pattern;
 @Target({ElementType.FIELD})
 @Documented
 @Constraint(validatedBy = {})
-@Pattern(regexp = "^[\\d\\\\-\\\\ー]{0,13}|",
+@Pattern(regexp = "^[\\d|\\\\-|\\\\ー]{0,13}$",
     message = "{re-mgr.common.validation.tel.message}")
 public @interface Tel {
     String message() default "";

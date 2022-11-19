@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chigirh.eh.rem.infra.mapper.MasterCodeMapper">
+    <select id="findByCodeType"
+            resultType="com.chigirh.eh.rem.infra.entity.MasterCodeEntity">
+        SELECT
+            code_value,
+            name,
+            code_order
+        FROM master_code
+        WHERE code_type = #{codeType}
+        ORDER BY code_order
+    </select>
+</mapper>

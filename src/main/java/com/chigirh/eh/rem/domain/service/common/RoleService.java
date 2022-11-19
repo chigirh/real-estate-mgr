@@ -1,7 +1,7 @@
-package com.chigirh.eh.rem.domain.service;
+package com.chigirh.eh.rem.domain.service.common;
 
 import com.chigirh.eh.rem.domain.common.Role;
-import com.chigirh.eh.rem.domain.repository.UserRepository;
+import com.chigirh.eh.rem.domain.repository.common.UserRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

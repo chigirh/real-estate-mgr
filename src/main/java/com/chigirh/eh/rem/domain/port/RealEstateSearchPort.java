@@ -1,9 +1,9 @@
 package com.chigirh.eh.rem.domain.port;
 
 import com.chigirh.eh.rem.domain.common.AreasConst;
-import com.chigirh.eh.rem.domain.model.RealEstateSearchCondition;
-import com.chigirh.eh.rem.domain.model.RealEstateSearchResult;
-import com.chigirh.eh.rem.domain.repository.RealEstateRepository;
+import com.chigirh.eh.rem.domain.model.realestate.RealEstateSearchCondition;
+import com.chigirh.eh.rem.domain.model.realestate.RealEstateSearchResult;
+import com.chigirh.eh.rem.domain.repository.realestate.RealEstateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

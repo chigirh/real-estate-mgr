@@ -1,6 +1,7 @@
 package com.chigirh.eh.rem.web.core.filter;
 
 import com.chigirh.eh.rem.web.dto.session.Notice;
+import com.chigirh.eh.rem.web.facade.ForeignerLiveStatusFacade;
 import com.chigirh.eh.rem.web.facade.UserRoleFacade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class ControllerInterceptor {
 
     private final UserRoleFacade userRoleFacade;
+    private final ForeignerLiveStatusFacade foreignerLiveStatusFacade;
 
     private final Notice notice;
 
@@ -47,12 +49,17 @@ public class ControllerInterceptor {
         var user = (OidcUser) argValues[userIdx];
         var model = (Model) argValues[modelIdx];
 
+        // settings user role
         userRoleFacade.setRoles(user, model);
         model.addAttribute("notice", notice);
 
         var methodSignature = (MethodSignature) pjp.getSignature();
         var method = methodSignature.getMethod();
 
+        // call facades
+        foreignerLiveStatusFacade.set(model);
+
+        // common logger.
         var getMapping = method.getAnnotation(GetMapping.class);
         if (getMapping != null) {
             log.info("path:{},user id:{}", getMapping.value(), user.getEmail());

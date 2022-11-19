@@ -1,7 +1,7 @@
 package com.chigirh.eh.rem.domain.port;
 
-import com.chigirh.eh.rem.domain.model.RealEstate;
-import com.chigirh.eh.rem.domain.repository.RealEstateRepository;
+import com.chigirh.eh.rem.domain.model.realestate.RealEstate;
+import com.chigirh.eh.rem.domain.repository.realestate.RealEstateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

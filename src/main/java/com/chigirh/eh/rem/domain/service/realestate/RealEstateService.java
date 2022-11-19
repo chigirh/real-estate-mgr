@@ -1,7 +1,7 @@
-package com.chigirh.eh.rem.domain.service;
+package com.chigirh.eh.rem.domain.service.realestate;
 
 import com.chigirh.eh.rem.domain.common.AreasConst;
-import com.chigirh.eh.rem.domain.repository.RealEstateRepository;
+import com.chigirh.eh.rem.domain.repository.realestate.RealEstateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

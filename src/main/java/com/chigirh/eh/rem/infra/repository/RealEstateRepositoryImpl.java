@@ -1,10 +1,10 @@
 package com.chigirh.eh.rem.infra.repository;
 
 import com.chigirh.eh.rem.domain.common.AreasConst;
-import com.chigirh.eh.rem.domain.model.RealEstate;
-import com.chigirh.eh.rem.domain.model.RealEstateSearchCondition;
-import com.chigirh.eh.rem.domain.model.RealEstateSearchResult;
-import com.chigirh.eh.rem.domain.repository.RealEstateRepository;
+import com.chigirh.eh.rem.domain.model.realestate.RealEstate;
+import com.chigirh.eh.rem.domain.model.realestate.RealEstateSearchCondition;
+import com.chigirh.eh.rem.domain.model.realestate.RealEstateSearchResult;
+import com.chigirh.eh.rem.domain.repository.realestate.RealEstateRepository;
 import com.chigirh.eh.rem.infra.config.DataAccess;
 import com.chigirh.eh.rem.infra.entity.RealEstateAreaEntity;
 import com.chigirh.eh.rem.infra.entity.RealEstateEntity;

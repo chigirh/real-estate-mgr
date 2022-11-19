@@ -1,6 +1,6 @@
 package com.chigirh.eh.rem.web.converter;
 
-import com.chigirh.eh.rem.domain.model.RealEstate;
+import com.chigirh.eh.rem.domain.model.realestate.RealEstate;
 import com.chigirh.eh.rem.domain.port.RealEstatcFetchPort;
 import com.chigirh.eh.rem.domain.port.RealEstateUpdatePort;
 import com.chigirh.eh.rem.web.dto.S0005Form;

@@ -1,4 +1,4 @@
-package com.chigirh.eh.rem.domain.model;
+package com.chigirh.eh.rem.domain.model.common;
 
 import java.util.Collection;
 import java.util.List;

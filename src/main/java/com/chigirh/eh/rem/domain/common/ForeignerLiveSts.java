@@ -10,12 +10,11 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum ForeignerLiveSts {
 
-    UNCONFIRMED("1", "未確認"),
-    ARROWED("2", "入居可能"),
-    NOT_ARROWED("3", "入居不可");
+    UNCONFIRMED("1"),
+    ARROWED("2"),
+    NOT_ARROWED("3");
 
     private final String value;
-    private final String name;
 
     public static ForeignerLiveSts of(String value) {
         var opt = Stream.of(values())

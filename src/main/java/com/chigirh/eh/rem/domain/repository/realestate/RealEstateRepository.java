@@ -1,9 +1,9 @@
-package com.chigirh.eh.rem.domain.repository;
+package com.chigirh.eh.rem.domain.repository.realestate;
 
-import com.chigirh.eh.rem.domain.model.RealEstate;
-import com.chigirh.eh.rem.domain.model.RealEstateSearchCondition;
+import com.chigirh.eh.rem.domain.model.realestate.RealEstate;
+import com.chigirh.eh.rem.domain.model.realestate.RealEstateSearchCondition;
 
-import com.chigirh.eh.rem.domain.model.RealEstateSearchResult;
+import com.chigirh.eh.rem.domain.model.realestate.RealEstateSearchResult;
 import java.util.List;
 
 public interface RealEstateRepository {

@@ -79,9 +79,8 @@
         <div class="form-group form-inline input-group-sm">
             <span class="col-md-2 text-md-right">外国人入居可否</span>
             <select class="form-control col-sm-4" id="foreignerLiveSts" th:field="*{foreignerLiveSts}">
-                <option value="1">未確認</option>
-                <option value="2">入居可</option>
-                <option value="3">入居不可</option>
+                <option th:each="select : ${foreignerLiveStatuses}" th:value="${select.value}">[[${select.name}]]
+                </option>
             </select>
             <span class="col-sm-2"></span>
             <span class="col-sm-10 text-danger small" th:if="${#fields.hasErrors('foreignerLiveSts')}"
