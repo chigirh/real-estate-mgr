@@ -3,6 +3,7 @@ package com.chigirh.eh.rem.infra.repository;
 import com.chigirh.eh.rem.domain.common.AreasConst;
 import com.chigirh.eh.rem.domain.model.RealEstate;
 import com.chigirh.eh.rem.domain.model.RealEstateSearchCondition;
+import com.chigirh.eh.rem.domain.model.RealEstateSearchResult;
 import com.chigirh.eh.rem.domain.repository.RealEstateRepository;
 import com.chigirh.eh.rem.infra.config.DataAccess;
 import com.chigirh.eh.rem.infra.entity.RealEstateAreaEntity;
@@ -70,7 +71,7 @@ public class RealEstateRepositoryImpl implements RealEstateRepository {
 
     @Override
     @DataAccess(process = "real_estate find.")
-    public List<RealEstate> fetchByCondition(RealEstateSearchCondition condition) {
+    public RealEstateSearchResult fetchByCondition(RealEstateSearchCondition condition) {
         var conditionEntity = new RealEstateMapper.Condition();
         conditionEntity.setReName(StringUtils.isEmpty(condition.getReName()) ? null : condition.getReName() + "%");
 
@@ -80,9 +81,16 @@ public class RealEstateRepositoryImpl implements RealEstateRepository {
         conditionEntity.setRentPrice(condition.getRentPrice());
         conditionEntity.setForeignerLiveSts(condition.getForeignerLiveSts());
 
-        var results = realEstateMapper.findByCondition(conditionEntity);
+        conditionEntity.setOffset(condition.getOffset());
+        conditionEntity.setLimit(condition.getSize());
 
-        return results.stream().map(this::toModel).collect(Collectors.toList());
+        var results = realEstateMapper.findByCondition(conditionEntity);
+        var total = realEstateMapper.countByCondition(conditionEntity);
+
+        var model = new RealEstateSearchResult();
+        model.setRecord(results.stream().map(this::toModel).collect(Collectors.toList()));
+        model.setTotal(total);
+        return model;
     }
 
     @Override

@@ -9,10 +9,13 @@ import com.chigirh.eh.rem.web.dto.S0004Form;
 import com.chigirh.eh.rem.web.dto.S0004TableRow;
 import com.chigirh.eh.rem.web.dto.session.Notice;
 import com.chigirh.eh.rem.web.dto.session.S0004Condition;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
@@ -45,6 +48,7 @@ public class S0004Controller {
     public String index(
         @AuthenticationPrincipal OidcUser user,
         @ModelAttribute S0004Form s0004Form,
+        @PageableDefault Pageable pageable,
         Model model
     ) {
         // conditions init.
@@ -57,11 +61,12 @@ public class S0004Controller {
         s0004Form.setRentPrice(s0004Condition.getRentPrice());
         s0004Form.setForeignerLiveSts(s0004Condition.getForeignerLiveSts());
 
-        // search
-        var rows = search(s0004Form);
-        model.addAttribute("rows", rows);
+        // condition cache
+        s0004Condition.setPageNumber(pageable.getPageNumber());
 
-        notice.info("検索結果" + rows.size() + "件");
+        // search
+        var page = search(s0004Form, model, pageable);
+        notice.info("検索結果" + page.getTotalElements() + "件");
 
         return "real-estate/list/index";
     }
@@ -70,6 +75,7 @@ public class S0004Controller {
     public String submit(
         @AuthenticationPrincipal OidcUser user,
         @Validated @ModelAttribute S0004Form s0004Form,
+        @PageableDefault Pageable pageable,
         BindingResult result,
         Model model
     ) {
@@ -78,32 +84,36 @@ public class S0004Controller {
         model.addAttribute("defaultArea", AreasConst.DEFAULT);
 
         // search
-        var rows = search(s0004Form);
-        model.addAttribute("rows", rows);
-
-        notice.info("検索結果" + rows.size() + "件");
+        var page = search(s0004Form, model, pageable);
+        notice.info("検索結果" + page.getTotalElements() + "件");
 
         // condition cache
         s0004Condition.setReName(s0004Form.getReName());
         s0004Condition.setArea(s0004Form.getArea());
         s0004Condition.setRentPrice(s0004Form.getRentPrice());
         s0004Condition.setForeignerLiveSts(s0004Form.getForeignerLiveSts());
+        s0004Condition.setPageNumber(pageable.getPageNumber());
 
         return "real-estate/list/index";
     }
 
-    private List<S0004TableRow> search(S0004Form s0004Form) {
+    private Page<S0004TableRow> search(S0004Form s0004Form, Model model, Pageable pageable) {
         var condition = new RealEstateSearchCondition();
         condition.setReName(s0004Form.getReName());
         condition.setArea(s0004Form.getArea());
         condition.setRentPrice(s0004Form.getRentPrice());
         condition.setForeignerLiveSts(s0004Form.getForeignerLiveSts());
+        condition.setOffset((int) pageable.getOffset());
+        condition.setSize(pageable.getPageSize());
 
         var input = new RealEstateSearchPort.Input(condition);
 
         var output = realEstateSearchPort.useCase(input);
 
         var rows = converter.convert(output);
-        return rows;
+        var page = new PageImpl(rows, pageable, output.result().getTotal());
+        model.addAttribute("rows", rows);
+        model.addAttribute("page", page);
+        return page;
     }
 }

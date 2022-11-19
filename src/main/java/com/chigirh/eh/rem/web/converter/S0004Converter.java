@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Component
 public class S0004Converter {
     public List<S0004TableRow> convert(RealEstateSearchPort.Output output) {
-        return output.results().stream()
+        return output.result().getRecord().stream()
             .map(e -> new S0004TableRow(
                     e.getReId(),
                     e.getReName(),

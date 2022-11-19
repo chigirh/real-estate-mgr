@@ -13,4 +13,6 @@ public class S0004Condition {
     private String area;
     private Integer rentPrice;
     private String foreignerLiveSts;
+    // pageable
+    private int pageNumber = 0;
 }

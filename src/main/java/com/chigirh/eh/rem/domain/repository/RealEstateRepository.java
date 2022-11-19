@@ -3,6 +3,7 @@ package com.chigirh.eh.rem.domain.repository;
 import com.chigirh.eh.rem.domain.model.RealEstate;
 import com.chigirh.eh.rem.domain.model.RealEstateSearchCondition;
 
+import com.chigirh.eh.rem.domain.model.RealEstateSearchResult;
 import java.util.List;
 
 public interface RealEstateRepository {
@@ -12,7 +13,7 @@ public interface RealEstateRepository {
 
     List<String> fetchRegisterAreas();
 
-    List<RealEstate> fetchByCondition(RealEstateSearchCondition condition);
+    RealEstateSearchResult fetchByCondition(RealEstateSearchCondition condition);
 
     RealEstate fetchByReId(String reId);
 }

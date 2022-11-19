@@ -5,9 +5,9 @@ import com.chigirh.eh.rem.domain.port.RealEstateUpdatePort;
 import com.chigirh.eh.rem.web.converter.S0005Converter;
 import com.chigirh.eh.rem.web.dto.S0005Form;
 import com.chigirh.eh.rem.web.dto.session.Notice;
+import com.chigirh.eh.rem.web.dto.session.S0004Condition;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
@@ -22,13 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * S0005(物件詳細画面).
  */
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class S0005Controller {
-
-    private static final Logger log = LoggerFactory.getLogger(S0005Controller.class);
-
-    private final S0004Controller s0004Controller;
 
     private final RealEstatcFetchPort realEstatcFetchPort;
     private final RealEstateUpdatePort realEstateUpdatePort;
@@ -36,6 +33,8 @@ public class S0005Controller {
     private final S0005Converter converter;
 
     private final Notice notice;
+
+    private final S0004Condition s0004Condition;
 
     @GetMapping("/real-estate/detail")
     public String index(
@@ -82,7 +81,7 @@ public class S0005Controller {
             notice.warn("更新失敗");
         }
 
-        return "redirect:/real-estate/list";
+        return "redirect:/real-estate/list?page=" + s0004Condition.getPageNumber();
 
     }
 

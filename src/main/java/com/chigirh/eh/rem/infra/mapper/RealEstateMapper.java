@@ -1,13 +1,11 @@
 package com.chigirh.eh.rem.infra.mapper;
 
 import com.chigirh.eh.rem.infra.entity.RealEstateEntity;
-import lombok.AllArgsConstructor;
+import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 @Mapper
 public interface RealEstateMapper {
@@ -19,6 +17,8 @@ public interface RealEstateMapper {
 
     List<RealEstateEntity> findByCondition(@Param("condition") Condition condition);
 
+    int countByCondition(@Param("condition") Condition condition);
+
     @Data
     @NoArgsConstructor
     class Condition {
@@ -26,5 +26,7 @@ public interface RealEstateMapper {
         private String area;
         private Integer rentPrice;
         private String foreignerLiveSts;
+        private int offset;
+        private int limit;
     }
 }

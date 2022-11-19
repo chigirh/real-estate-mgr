@@ -12,4 +12,6 @@ public class RealEstateSearchCondition {
     private String area;
     private Integer rentPrice;
     private String foreignerLiveSts;
+    private int offset;
+    private int size;
 }
