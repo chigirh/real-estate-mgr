@@ -34,9 +34,8 @@
         <div class="form-group form-inline input-group-sm">
             <label for="foreignerLiveSts" class="col-md-2 control-label">外国人入居可否</label>
             <select class="form-control col-md-2" id="foreignerLiveSts" th:field="*{foreignerLiveSts}">
-                <option value="1" th:if="${role.hasRole('ROLE_ADMIN')}">未確認</option>
-                <option value="2" th:if="${role.hasRole('ROLE_USER')}">入居可</option>
-                <option value="3" th:if="${role.hasRole('ROLE_ADMIN')}">入居不可</option>
+                <option th:each="select : ${foreignerLiveStatuses}" th:value="${select.value}">[[${select.name}]]
+                </option>
             </select>
         </div>
         <div class="text-center">

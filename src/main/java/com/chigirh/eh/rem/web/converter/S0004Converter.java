@@ -1,13 +1,11 @@
 package com.chigirh.eh.rem.web.converter;
 
-import com.chigirh.eh.rem.domain.common.ForeignerLiveSts;
 import com.chigirh.eh.rem.domain.port.RealEstateSearchPort;
 import com.chigirh.eh.rem.web.dto.S0004TableRow;
 import com.chigirh.eh.rem.web.dto.converter.DateTimeConverter;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
 @Component
 public class S0004Converter {
@@ -20,7 +18,7 @@ public class S0004Converter {
                     e.getRentPrice(),
                     e.getMgrCompanyName(),
                     e.getMgrCompanyTel(),
-                    ForeignerLiveSts.of(e.getForeignerLiveSts()).getName(),
+                    e.getForeignerLiveSts(),
                     DateTimeConverter.convertAtDateTime(e.getUpdatedAt())
                 )
             ).collect(Collectors.toList());

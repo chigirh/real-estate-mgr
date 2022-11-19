@@ -1,4 +1,4 @@
-package com.chigirh.eh.rem.domain.repository;
+package com.chigirh.eh.rem.domain.repository.common;
 
 import com.chigirh.eh.rem.domain.common.Role;
 import java.util.List;

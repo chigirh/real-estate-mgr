@@ -1,7 +1,7 @@
 package com.chigirh.eh.rem.web.converter;
 
 import com.chigirh.eh.rem.domain.error.SystemError;
-import com.chigirh.eh.rem.domain.model.RealEstate;
+import com.chigirh.eh.rem.domain.model.realestate.RealEstate;
 import com.chigirh.eh.rem.domain.port.RealEstateCreatePort;
 import com.chigirh.eh.rem.web.dto.S0003Form;
 import org.springframework.stereotype.Component;

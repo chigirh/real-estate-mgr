@@ -1,4 +1,4 @@
-package com.chigirh.eh.rem.domain.model;
+package com.chigirh.eh.rem.domain.model.realestate;
 
 import java.util.List;
 import lombok.AllArgsConstructor;

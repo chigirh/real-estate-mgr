@@ -8,14 +8,13 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
 @Documented
 @Constraint(validatedBy = {})
-@Pattern(regexp = "^[\\d\\\\-\\\\ー]{0,13}|",
-    message = "{re-mgr.common.validation.tel.message}")
+@Size(max = 13, message = "{re-mgr.common.validation.tel.message}")
 public @interface Tel {
     String message() default "";
 

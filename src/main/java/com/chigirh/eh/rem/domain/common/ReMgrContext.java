@@ -1,6 +1,6 @@
 package com.chigirh.eh.rem.domain.common;
 
-import com.chigirh.eh.rem.domain.model.User;
+import com.chigirh.eh.rem.domain.model.common.User;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;

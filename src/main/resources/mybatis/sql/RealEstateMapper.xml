@@ -93,13 +93,16 @@
             t1.rent_price,
             t1.mgr_company_name,
             t1.mgr_company_tel,
-            t1.foreigner_live_sts,
+            t3.name AS foreigner_live_sts,
             t1.pdf,
             t1.note,
             t1.updated_at
         FROM real_estate AS t1
         INNER JOIN real_estate_area AS t2
-        ON t1.re_id = t2.re_id
+            ON t1.re_id = t2.re_id
+        INNER JOIN master_code AS t3
+            ON t3.code_type = '01'
+            AND t1.foreigner_live_sts = t3.code_value
         <include refid="where_condition" />
         ORDER BY t1.updated_at desc
         LIMIT #{condition.limit} OFFSET #{condition.offset}

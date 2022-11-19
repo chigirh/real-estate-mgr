@@ -1,9 +1,9 @@
 package com.chigirh.eh.rem.web.controller;
 
 import com.chigirh.eh.rem.domain.common.AreasConst;
-import com.chigirh.eh.rem.domain.model.RealEstateSearchCondition;
+import com.chigirh.eh.rem.domain.model.realestate.RealEstateSearchCondition;
 import com.chigirh.eh.rem.domain.port.RealEstateSearchPort;
-import com.chigirh.eh.rem.domain.service.RealEstateService;
+import com.chigirh.eh.rem.domain.service.realestate.RealEstateService;
 import com.chigirh.eh.rem.web.converter.S0004Converter;
 import com.chigirh.eh.rem.web.dto.S0004Form;
 import com.chigirh.eh.rem.web.dto.S0004TableRow;
