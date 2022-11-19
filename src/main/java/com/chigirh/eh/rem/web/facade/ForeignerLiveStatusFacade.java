@@ -29,18 +29,18 @@ public class ForeignerLiveStatusFacade {
         model.addAttribute(ATTRIBUTE_NAME, selects);
     }
 
-    public void setRoleUser(RoleDto role, Model model) {
+    public void setByRole(RoleDto role, Model model) {
         var codes = codeMasterService.fetchForeignerLiveStatus();
 
         List<SelectDto> selects;
 
-        if (role.hasRole(Role.USER.getValue())) {
+        if (role.hasRole(Role.ADMIN.getValue())) {
+            selects = converter.convert(codes);
+        } else {
             var roleUserArrowed = codes.stream()
                 .filter(e -> ForeignerLiveSts.ARROWED.getValue().equals(e.getValue()))
                 .collect(Collectors.toList());
             selects = converter.convert(roleUserArrowed);
-        } else {
-            selects = converter.convert(codes);
         }
 
         model.addAttribute(ATTRIBUTE_NAME, selects);

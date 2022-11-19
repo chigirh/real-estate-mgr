@@ -1,8 +1,8 @@
 package com.chigirh.eh.rem.web.core.filter;
 
 import com.chigirh.eh.rem.web.dto.session.Notice;
-import com.chigirh.eh.rem.web.facade.ForeignerLiveStatusFacade;
-import com.chigirh.eh.rem.web.facade.UserRoleFacade;
+import com.chigirh.eh.rem.web.facade.common.FacadeConst;
+import com.chigirh.eh.rem.web.facade.delegator.FacadeDelegator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -22,9 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class ControllerInterceptor {
 
-    private final UserRoleFacade userRoleFacade;
-    private final ForeignerLiveStatusFacade foreignerLiveStatusFacade;
-
+    private final FacadeDelegator facadeDelegator;
     private final Notice notice;
 
     @Before("execution(* com.chigirh.eh.rem.web.controller.*Controller.*(..))")
@@ -49,25 +47,28 @@ public class ControllerInterceptor {
         var user = (OidcUser) argValues[userIdx];
         var model = (Model) argValues[modelIdx];
 
-        // settings user role
-        userRoleFacade.setRoles(user, model);
-        model.addAttribute("notice", notice);
-
         var methodSignature = (MethodSignature) pjp.getSignature();
         var method = methodSignature.getMethod();
 
-        // call facades
-        foreignerLiveStatusFacade.set(model);
-
         // common logger.
+        String requestUrl = "";
         var getMapping = method.getAnnotation(GetMapping.class);
         if (getMapping != null) {
-            log.info("path:{},user id:{}", getMapping.value(), user.getEmail());
+            requestUrl = String.format(FacadeConst.PATH_FORMAT, "GET", getMapping.value()[0]);
+            log.info("{},user id:{}", requestUrl, user.getEmail());
         }
 
         var postMapping = method.getAnnotation(PostMapping.class);
         if (postMapping != null) {
-            log.info("path:{},user id:{}", postMapping.value(), user.getEmail());
+            requestUrl = String.format(FacadeConst.PATH_FORMAT, "POST", postMapping.value()[0]);
+            log.info("{},user id:{}", requestUrl, user.getEmail());
         }
+
+        // set notice
+        model.addAttribute("notice", notice);
+
+        // delegate facade
+        facadeDelegator.use(model, user, requestUrl);
+
     }
 }
