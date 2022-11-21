@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>物件登録画面</title>
@@ -18,21 +18,21 @@
           th:if="${role.hasRole('ROLE_ADMIN')}"
           method="post" enctype="multipart/form-data">
         <div class="form-group form-inline input-group-sm">
-            <span class="col-md-2 text-md-right">物件名</span>
+            <span class="col-md-2 text-md-right">物件名<span style="color:#ff0000;">※</span></span>
             <input type="text" class="form-control col-sm-7" id="reName" th:field="*{reName}">
             <span class="col-sm-6"></span>
             <span class="col-sm-10 text-danger small" th:if="${#fields.hasErrors('reName')}"
                   th:errors="*{reName}"></span>
         </div>
         <div class="form-group form-inline input-group-sm">
-            <span class="col-md-2 text-md-right">物件名(カナ)</span>
+            <span class="col-md-2 text-md-right">物件名(カナ)<span style="color:#ff0000;">※</span></span>
             <input type="text" class="form-control col-sm-7" id="reNameKana" th:field="*{reNameKana}">
             <span class="col-sm-6"></span>
             <span class="col-sm-10 text-danger small" th:if="${#fields.hasErrors('reNameKana')}"
                   th:errors="*{reNameKana}"></span>
         </div>
         <div class="form-group form-inline input-group-sm">
-            <span class="col-md-2 text-md-right">エリア1</span>
+            <span class="col-md-2 text-md-right">エリア1<span style="color:#ff0000;">※</span></span>
             <input type="text" class="form-control col-sm-6" id="area1" th:field="*{area1}">
             <span class="col-sm-7"></span>
             <span class="col-sm-10 text-danger small" th:if="${#fields.hasErrors('area1')}" th:errors="*{area1}"></span>
@@ -50,17 +50,38 @@
             <span class="col-sm-10 text-danger small" th:if="${#fields.hasErrors('area3')}" th:errors="*{area3}"></span>
         </div>
         <div class="form-group form-inline input-group-sm">
-            <span class="col-md-2 text-md-right">住所</span>
+            <span class="col-md-2 text-md-right">住所<span style="color:#ff0000;">※</span></span>
             <input type="text" class="form-control col-sm-8" id="address" th:field="*{address}">
             <span class="col-sm-5"></span>
             <span class="col-sm-10 text-danger small" th:if="${#fields.hasErrors('address')}"
                   th:errors="*{address}"></span>
         </div>
         <div class="form-group form-inline input-group-sm">
-            <span class="col-md-2 text-md-right">家賃</span>
+            <span class="col-md-2 text-md-right">家賃<span style="color:#ff0000;">※</span></span>
             <input type="number" class="form-control col-sm-3" id="rentPrice" step="1000" th:field="*{rentPrice}">
             <span class="col-sm-10"></span>
             <span class="col-sm-10 text-danger small" th:if="${#fields.hasErrors('rentPrice')}"
+                  th:errors="*{rentPrice}"></span>
+        </div>
+        <div class="form-group form-inline input-group-sm">
+            <span class="col-md-2 text-md-right">共益費</span>
+            <input type="number" class="form-control col-sm-3" id="condoFee" step="1000" th:field="*{condoFee}">
+            <span class="col-sm-10"></span>
+            <span class="col-sm-10 text-danger small" th:if="${#fields.hasErrors('condoFee')}"
+                  th:errors="*{rentPrice}"></span>
+        </div>
+        <div class="form-group form-inline input-group-sm">
+            <span class="col-md-2 text-md-right">水町費</span>
+            <input type="number" class="form-control col-sm-3" id="waterFee" step="1000" th:field="*{waterFee}">
+            <span class="col-sm-10"></span>
+            <span class="col-sm-10 text-danger small" th:if="${#fields.hasErrors('waterFee')}"
+                  th:errors="*{rentPrice}"></span>
+        </div>
+        <div class="form-group form-inline input-group-sm">
+            <span class="col-md-2 text-md-right">その他費用</span>
+            <input type="text" class="form-control col-sm-3" id="otherFee" th:field="*{otherFee}">
+            <span class="col-sm-10"></span>
+            <span class="col-sm-10 text-danger small" th:if="${#fields.hasErrors('otherFee')}"
                   th:errors="*{rentPrice}"></span>
         </div>
         <div class="form-group form-inline input-group-sm">
@@ -88,11 +109,11 @@
                   th:errors="*{foreignerLiveSts}"></span>
         </div>
         <div class="form-group form-inline input-group-sm">
-            <span class="col-md-2 text-md-right">PDFファイル</span>
+            <span class="col-md-2 text-md-right">PDFファイル<span style="color:#ff0000;">※</span></span>
             <input type="file" class="form-control-file col-sm-6" id="uploadFile" th:field="*{uploadFile}">
             <span class="col-sm-7"></span>
-            <span class="col-sm-10 text-danger small" th:if="${#fields.hasErrors('pdfFile')}"
-                  th:errors="*{pdfFile}"></span>
+            <span class="col-sm-10 text-danger small" th:if="${#fields.hasErrors('uploadFile')}"
+                  th:errors="*{uploadFile}"></span>
         </div>
         <div class="form-group form-inline">
             <span class="col-md-2 text-md-right">備考</span>

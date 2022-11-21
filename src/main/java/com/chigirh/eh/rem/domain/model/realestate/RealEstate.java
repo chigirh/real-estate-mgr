@@ -18,6 +18,9 @@ public class RealEstate {
     private List<String> areas;
     private String address;
     private int rentPrice;
+    private Integer condoFee;
+    private Integer waterFee;
+    private String otherFee;
     private String mgrCompanyName;
     private String mgrCompanyTel;
     private String foreignerLiveSts;

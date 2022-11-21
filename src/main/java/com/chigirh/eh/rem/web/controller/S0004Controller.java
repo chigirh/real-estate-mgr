@@ -10,8 +10,6 @@ import com.chigirh.eh.rem.web.dto.S0004TableRow;
 import com.chigirh.eh.rem.web.dto.session.Notice;
 import com.chigirh.eh.rem.web.dto.session.S0004Condition;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -33,8 +31,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class S0004Controller {
 
-    private static final Logger log = LoggerFactory.getLogger(S0004Controller.class);
-
+    public static final String RESULT_FORMAT = "検索結果%s件(%s件目～%s件目を表示中)";
     private final RealEstateService realEstateService;
     private final RealEstateSearchPort realEstateSearchPort;
 
@@ -55,6 +52,10 @@ public class S0004Controller {
         model.addAttribute("areas", realEstateService.fetchAreas());
         model.addAttribute("defaultArea", AreasConst.DEFAULT);
 
+        if (!s0004Condition.isSearched()) {
+            return "real-estate/list/index";
+        }
+
         // condition restore.
         s0004Form.setReName(s0004Condition.getReName());
         s0004Form.setArea(s0004Condition.getArea());
@@ -66,7 +67,6 @@ public class S0004Controller {
 
         // search
         var page = search(s0004Form, model, pageable);
-        notice.info("検索結果" + page.getTotalElements() + "件");
 
         return "real-estate/list/index";
     }
@@ -85,7 +85,6 @@ public class S0004Controller {
 
         // search
         var page = search(s0004Form, model, pageable);
-        notice.info("検索結果" + page.getTotalElements() + "件");
 
         // condition cache
         s0004Condition.setReName(s0004Form.getReName());
@@ -93,6 +92,8 @@ public class S0004Controller {
         s0004Condition.setRentPrice(s0004Form.getRentPrice());
         s0004Condition.setForeignerLiveSts(s0004Form.getForeignerLiveSts());
         s0004Condition.setPageNumber(pageable.getPageNumber());
+
+        s0004Condition.setSearched(true);
 
         return "real-estate/list/index";
     }
@@ -114,6 +115,16 @@ public class S0004Controller {
         var page = new PageImpl(rows, pageable, output.result().getTotal());
         model.addAttribute("rows", rows);
         model.addAttribute("page", page);
+        
+        var total = page.getTotalElements();
+        var begin = pageable.getOffset() + 1;
+        var end = pageable.getOffset() + pageable.getPageSize();
+        if (total < end) {
+            end = total;
+        }
+
+        notice.info(String.format(RESULT_FORMAT, total, begin, end));
+
         return page;
     }
 }

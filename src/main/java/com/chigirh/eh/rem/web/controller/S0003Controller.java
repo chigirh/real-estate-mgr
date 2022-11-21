@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class S0003Controller {
 
+    private static final String TEMPLATE = "【案内方法】\n【保証会社】\n【初期費用】\n【その他】";
+
     private final RealEstateCreatePort realEstateCreatePort;
 
     private final S0003Converter converter;
@@ -32,6 +34,8 @@ public class S0003Controller {
 
     @GetMapping("/real-estate/register")
     public String index(@AuthenticationPrincipal OidcUser user, S0003Form s0003Form, Model model) {
+        s0003Form.setNote(TEMPLATE);
+
         return "real-estate/register/index";
     }
 
@@ -42,6 +46,7 @@ public class S0003Controller {
         BindingResult result,
         Model model
     ) {
+
         if (result.hasErrors()) {
             return "real-estate/register/index";
         }

@@ -74,7 +74,7 @@
         </tbody>
     </table>
 
-    <nav aria-label="Page navigation example">
+    <nav aria-label="Page navigation example" th:if="${page != null}">
         <ul class="pagination">
             <li class="page-item disabled" th:if="${page.number == 0}">
                 <a class="page-link" th:href="@{${url}(page=${page.number -1})}">Previous</a>

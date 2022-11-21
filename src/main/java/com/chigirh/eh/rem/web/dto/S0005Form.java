@@ -24,6 +24,9 @@ public class S0005Form {
     private String address;
     @RentPrice
     private Integer rentPrice;
+    private Integer condoFee;
+    private Integer waterFee;
+    private String otherFee;
     private String mgrCompanyName;
     @Tel
     private String mgrCompanyTel;

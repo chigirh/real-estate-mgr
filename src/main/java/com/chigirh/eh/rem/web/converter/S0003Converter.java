@@ -4,12 +4,11 @@ import com.chigirh.eh.rem.domain.error.SystemError;
 import com.chigirh.eh.rem.domain.model.realestate.RealEstate;
 import com.chigirh.eh.rem.domain.port.RealEstateCreatePort;
 import com.chigirh.eh.rem.web.dto.S0003Form;
-import org.springframework.stereotype.Component;
-import org.thymeleaf.util.StringUtils;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
+import org.springframework.stereotype.Component;
+import org.thymeleaf.util.StringUtils;
 
 @Component
 public class S0003Converter {
@@ -31,6 +30,9 @@ public class S0003Converter {
 
         model.setAddress(s0003Form.getAddress());
         model.setRentPrice(s0003Form.getRentPrice());
+        model.setCondoFee(s0003Form.getCondoFee());
+        model.setWaterFee(s0003Form.getWaterFee());
+        model.setOtherFee(s0003Form.getOtherFee());
         model.setMgrCompanyName(s0003Form.getMgrCompanyName());
         model.setMgrCompanyTel(s0003Form.getMgrCompanyTel());
         model.setForeignerLiveSts(s0003Form.getForeignerLiveSts());
