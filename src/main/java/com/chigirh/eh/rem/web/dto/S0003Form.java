@@ -2,6 +2,7 @@ package com.chigirh.eh.rem.web.dto;
 
 import com.chigirh.eh.rem.web.dto.validation.annotation.Address;
 import com.chigirh.eh.rem.web.dto.validation.annotation.Area;
+import com.chigirh.eh.rem.web.dto.validation.annotation.Pdf;
 import com.chigirh.eh.rem.web.dto.validation.annotation.RealEstateName;
 import com.chigirh.eh.rem.web.dto.validation.annotation.RealEstateNameKana;
 import com.chigirh.eh.rem.web.dto.validation.annotation.RentPrice;
@@ -27,25 +28,14 @@ public class S0003Form {
     private String address;
     @RentPrice
     private Integer rentPrice;
+    private Integer condoFee;
+    private Integer waterFee;
+    private String otherFee;
     private String mgrCompanyName;
     @Tel
     private String mgrCompanyTel;
     private String foreignerLiveSts;
+    @Pdf
     private MultipartFile uploadFile;
     private String note;
-
-    @AssertTrue(message = "{re-mgr.real-estate.validation.upload-file.message}")
-    public boolean isPdfFile() {
-        if (uploadFile == null) {
-            return false;
-        }
-
-
-        var fileName = uploadFile.getOriginalFilename();
-
-        int idx = fileName.lastIndexOf(".");
-        String extName = (-1 != idx) ? fileName.substring(idx + 1) : "";
-
-        return "pdf".equals(extName);
-    }
 }

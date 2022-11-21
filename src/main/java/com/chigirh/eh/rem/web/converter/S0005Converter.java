@@ -4,10 +4,9 @@ import com.chigirh.eh.rem.domain.model.realestate.RealEstate;
 import com.chigirh.eh.rem.domain.port.RealEstatcFetchPort;
 import com.chigirh.eh.rem.domain.port.RealEstateUpdatePort;
 import com.chigirh.eh.rem.web.dto.S0005Form;
+import java.util.ArrayList;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.util.StringUtils;
-
-import java.util.ArrayList;
 
 @Component
 public class S0005Converter {
@@ -30,6 +29,9 @@ public class S0005Converter {
 
         model.setAddress(s0005Form.getAddress());
         model.setRentPrice(s0005Form.getRentPrice());
+        model.setCondoFee(s0005Form.getCondoFee());
+        model.setWaterFee(s0005Form.getWaterFee());
+        model.setOtherFee(s0005Form.getOtherFee());
         model.setMgrCompanyName(s0005Form.getMgrCompanyName());
         model.setMgrCompanyTel(s0005Form.getMgrCompanyTel());
         model.setForeignerLiveSts(s0005Form.getForeignerLiveSts());
@@ -53,6 +55,9 @@ public class S0005Converter {
 
         form.setAddress(model.getAddress());
         form.setRentPrice(model.getRentPrice());
+        form.setCondoFee(model.getCondoFee());
+        form.setWaterFee(model.getWaterFee());
+        form.setOtherFee(model.getOtherFee());
         form.setMgrCompanyName(model.getMgrCompanyName());
         form.setMgrCompanyTel(model.getMgrCompanyTel());
         form.setForeignerLiveSts(model.getForeignerLiveSts());

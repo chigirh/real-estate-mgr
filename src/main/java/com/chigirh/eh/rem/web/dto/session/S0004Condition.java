@@ -15,4 +15,6 @@ public class S0004Condition {
     private String foreignerLiveSts;
     // pageable
     private int pageNumber = 0;
+    // init
+    private boolean isSearched = false;
 }

@@ -122,6 +122,9 @@ public class RealEstateRepositoryImpl implements RealEstateRepository {
         entity.setInitial(model.getReNameKana().substring(0, 1));
         entity.setAddress(model.getAddress());
         entity.setRentPrice(model.getRentPrice());
+        entity.setCondoFee(model.getCondoFee());
+        entity.setWaterFee(model.getWaterFee());
+        entity.setOtherFee(model.getOtherFee());
         entity.setMgrCompanyName(model.getMgrCompanyName());
         entity.setMgrCompanyTel(model.getMgrCompanyTel());
         entity.setForeignerLiveSts(model.getForeignerLiveSts());
@@ -138,6 +141,9 @@ public class RealEstateRepositoryImpl implements RealEstateRepository {
         model.setReNameKana(entity.getReNameKana());
         model.setAddress(entity.getAddress());
         model.setRentPrice(entity.getRentPrice());
+        model.setCondoFee(entity.getCondoFee());
+        model.setWaterFee(entity.getWaterFee());
+        model.setOtherFee(entity.getOtherFee());
         model.setMgrCompanyName(entity.getMgrCompanyName());
         model.setMgrCompanyTel(entity.getMgrCompanyTel());
         model.setForeignerLiveSts(entity.getForeignerLiveSts());
