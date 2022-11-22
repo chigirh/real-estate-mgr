@@ -139,4 +139,9 @@
         FROM real_estate
         WHERE re_id = #{reId}
     </select>
+
+    <delete id="deleteByKey">
+        DELETE FROM real_estate
+        WHERE re_id = #{reId}
+    </delete>
 </mapper>
