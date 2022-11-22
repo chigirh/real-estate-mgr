@@ -2,12 +2,14 @@ package com.chigirh.eh.rem.web.dto;
 
 import com.chigirh.eh.rem.web.dto.validation.annotation.Address;
 import com.chigirh.eh.rem.web.dto.validation.annotation.Area;
+import com.chigirh.eh.rem.web.dto.validation.annotation.Pdf;
 import com.chigirh.eh.rem.web.dto.validation.annotation.RealEstateName;
 import com.chigirh.eh.rem.web.dto.validation.annotation.RealEstateNameKana;
 import com.chigirh.eh.rem.web.dto.validation.annotation.RentPrice;
 import com.chigirh.eh.rem.web.dto.validation.annotation.Tel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @NoArgsConstructor
@@ -32,5 +34,7 @@ public class S0005Form {
     private String mgrCompanyTel;
     private String foreignerLiveSts;
     private String pdf;
+    @Pdf
+    private MultipartFile uploadFile;
     private String note;
 }

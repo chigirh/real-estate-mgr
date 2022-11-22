@@ -1,5 +1,6 @@
 package com.chigirh.eh.rem.infra.mapper;
 
+import com.chigirh.eh.rem.domain.repository.realestate.RealEstateRepository;
 import com.chigirh.eh.rem.infra.entity.RealEstateEntity;
 import java.util.List;
 import lombok.Data;
@@ -14,6 +15,8 @@ public interface RealEstateMapper {
     int updateByKey(@Param("entity") RealEstateEntity entity);
 
     RealEstateEntity findByKey(@Param("reId") String reId);
+
+    int deleteByKey(@Param("reId") String reId);
 
     List<RealEstateEntity> findByCondition(@Param("condition") Condition condition);
 

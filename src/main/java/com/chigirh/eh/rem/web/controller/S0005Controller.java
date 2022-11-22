@@ -1,5 +1,6 @@
 package com.chigirh.eh.rem.web.controller;
 
+import com.chigirh.eh.rem.domain.port.RealEstatcDeletePort;
 import com.chigirh.eh.rem.domain.port.RealEstatcFetchPort;
 import com.chigirh.eh.rem.domain.port.RealEstateUpdatePort;
 import com.chigirh.eh.rem.web.converter.S0005Converter;
@@ -12,8 +13,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +32,7 @@ public class S0005Controller {
 
     private final RealEstatcFetchPort realEstatcFetchPort;
     private final RealEstateUpdatePort realEstateUpdatePort;
+    private final RealEstatcDeletePort realEstatcDeletePort;
 
     private final S0005Converter converter;
 
@@ -54,7 +58,11 @@ public class S0005Controller {
 
         converter.convert(s0005Form, output);
 
-        model.addAttribute("pdfImage", "data:application/pdf;base64," + s0005Form.getPdf());
+        if (StringUtils.isEmpty(s0005Form.getPdf())) {
+            notice.warn("PDFファイル未登録");
+        } else {
+            model.addAttribute("pdfImage", "data:application/pdf;base64," + s0005Form.getPdf());
+        }
         model.addAttribute("reId", reId);
 
         return "real-estate/detail/index";
@@ -77,6 +85,26 @@ public class S0005Controller {
 
         if (0 < output.result()) {
             notice.success("更新成功");
+        } else {
+            notice.warn("更新失敗");
+        }
+
+        return "redirect:/real-estate/list?page=" + s0004Condition.getPageNumber();
+
+    }
+
+    @PostMapping("/real-estate/delete")
+    public String delete(
+        @AuthenticationPrincipal OidcUser user,
+        @RequestParam("reId") String reId,
+        @ModelAttribute S0005Form s0005Form,
+        Model model
+    ) {
+        var input = new RealEstatcDeletePort.Input(reId);
+        var output = realEstatcDeletePort.useCase(input);
+
+        if (0 < output.result()) {
+            notice.success("削除成功");
         } else {
             notice.warn("更新失敗");
         }

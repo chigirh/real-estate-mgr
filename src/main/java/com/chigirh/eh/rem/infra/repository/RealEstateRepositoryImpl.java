@@ -110,6 +110,12 @@ public class RealEstateRepositoryImpl implements RealEstateRepository {
         return model;
     }
 
+    @Override
+    @DataAccess(process = "real_estate delete.")
+    public int deleteByReId(String reId) {
+        return realEstateMapper.deleteByKey(reId);
+    }
+
     private RealEstateAreaEntity toEntity(String reId, String area) {
         return new RealEstateAreaEntity(reId, area);
     }

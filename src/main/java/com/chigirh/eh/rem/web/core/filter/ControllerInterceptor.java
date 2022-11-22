@@ -13,6 +13,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -61,6 +62,12 @@ public class ControllerInterceptor {
         var postMapping = method.getAnnotation(PostMapping.class);
         if (postMapping != null) {
             requestUrl = String.format(FacadeConst.PATH_FORMAT, "POST", postMapping.value()[0]);
+            log.info("{},user id:{}", requestUrl, user.getEmail());
+        }
+
+        var deleteMapping = method.getAnnotation(DeleteMapping.class);
+        if (deleteMapping != null) {
+            requestUrl = String.format(FacadeConst.PATH_FORMAT, "POST", deleteMapping.value()[0]);
             log.info("{},user id:{}", requestUrl, user.getEmail());
         }
 

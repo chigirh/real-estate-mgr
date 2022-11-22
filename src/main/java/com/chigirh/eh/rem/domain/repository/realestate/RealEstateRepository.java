@@ -16,4 +16,6 @@ public interface RealEstateRepository {
     RealEstateSearchResult fetchByCondition(RealEstateSearchCondition condition);
 
     RealEstate fetchByReId(String reId);
+
+    int deleteByReId(String reId);
 }

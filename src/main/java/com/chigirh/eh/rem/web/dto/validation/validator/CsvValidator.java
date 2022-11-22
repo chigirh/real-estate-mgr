@@ -1,20 +1,21 @@
 package com.chigirh.eh.rem.web.dto.validation.validator;
 
+import com.chigirh.eh.rem.web.dto.validation.annotation.Csv;
 import com.chigirh.eh.rem.web.dto.validation.annotation.Pdf;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class PdfValidator implements ConstraintValidator<Pdf, MultipartFile> {
+public class CsvValidator implements ConstraintValidator<Csv, MultipartFile> {
     @Override
-    public void initialize(Pdf constraint) {
+    public void initialize(Csv constraint) {
     }
 
     @Override
     public boolean isValid(MultipartFile multipartFile, ConstraintValidatorContext context) {
         if (multipartFile == null || multipartFile.isEmpty()) {
-            return true;
+            return false;
         }
 
         var fileName = multipartFile.getOriginalFilename();
@@ -22,6 +23,6 @@ public class PdfValidator implements ConstraintValidator<Pdf, MultipartFile> {
         int idx = fileName.lastIndexOf(".");
         String extName = (-1 != idx) ? fileName.substring(idx + 1) : "";
 
-        return "pdf".equals(extName);
+        return "csv".equals(extName);
     }
 }

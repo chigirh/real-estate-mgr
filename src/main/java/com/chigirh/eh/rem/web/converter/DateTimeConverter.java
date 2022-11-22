@@ -1,4 +1,4 @@
-package com.chigirh.eh.rem.web.dto.converter;
+package com.chigirh.eh.rem.web.converter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

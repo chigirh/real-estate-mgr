@@ -19,6 +19,7 @@ public class FacadeConfig {
                 put(FacadeConst.ForeignerLiveStatus.SET,
                     new HashSet<>(List.of(
                         "GET:/real-estate/register",
+                        "GET:/real-estate/bulk",
                         "GET:/real-estate/detail"
                     )));
                 put(FacadeConst.ForeignerLiveStatus.SET_BY_ROLE,

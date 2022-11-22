@@ -34,58 +34,43 @@ public class Notice {
         return !info.isEmpty();
     }
 
-    public String getInfo() {
-        if (info.isEmpty()) {
-            return null;
-        }
-        var message = String.join("\r\n", info);
-        info.clear();
-        return message;
+    public List<String> getInfo() {
+        var messages = new ArrayList<>(info);
+        return messages;
     }
 
     public boolean isSuccessNotEmpty() {
         return !success.isEmpty();
     }
 
-    public String getSuccess() {
-        if (success.isEmpty()) {
-            return null;
-        }
-        var message = String.join("\r\n", success);
-        success.clear();
-        return message;
+    public List<String> getSuccess() {
+        var messages = new ArrayList<>(success);
+        return messages;
     }
 
     public boolean isWarnNotEmpty() {
         return !warn.isEmpty();
     }
 
-    public String getWarn() {
-        if (warn.isEmpty()) {
-            return null;
-        }
-        var message = String.join("\r\n", warn);
-        warn.clear();
-        return message;
+    public List<String> getWarn() {
+        var messages = new ArrayList<>(warn);
+        return messages;
     }
 
     public boolean isErrorNotEmpty() {
         return !error.isEmpty();
     }
 
-    public String getError() {
-        if (error.isEmpty()) {
-            return null;
-        }
-        var message = String.join("\r\n", error);
-        error.clear();
-        return message;
+    public List<String> getError() {
+        var messages = new ArrayList<>(error);
+        return messages;
     }
 
-    public void clear() {
+    public boolean getClear() {
         info.clear();
         success.clear();
         warn.clear();
         error.clear();
+        return false;
     }
 }

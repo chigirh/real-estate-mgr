@@ -25,6 +25,15 @@
                 <p class="card-text">物件を登録する</p>
             </div>
         </div>
+        <div class="card" th:if="${role.hasRole('ROLE_ADMIN')}">
+            <a class="nav-link text-dark" href="/real-estate/bulk">
+                <img th:src="@{/image/s0002_card.jpg}" class="card-img-top" alt="...">
+            </a>
+            <div class="card-body">
+                <h5 class="card-title">物件一括登録</h5>
+                <p class="card-text">CSVから物件を登録する</p>
+            </div>
+        </div>
         <div class="card" th:if="${role.hasRole('ROLE_USER')}">
             <a class="nav-link text-dark" href="/real-estate/list">
                 <img th:src="@{/image/s0002_card.jpg}" class="card-img-top" alt="...">
