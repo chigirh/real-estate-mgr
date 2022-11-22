@@ -11,8 +11,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.AssertTrue;
-
 @Data
 @NoArgsConstructor
 public class S0003Form {

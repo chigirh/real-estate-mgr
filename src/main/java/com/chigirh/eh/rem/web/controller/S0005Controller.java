@@ -12,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,7 +55,11 @@ public class S0005Controller {
 
         converter.convert(s0005Form, output);
 
-        model.addAttribute("pdfImage", "data:application/pdf;base64," + s0005Form.getPdf());
+        if (StringUtils.isEmpty(s0005Form.getPdf())) {
+            notice.warn("PDFファイル未登録");
+        } else {
+            model.addAttribute("pdfImage", "data:application/pdf;base64," + s0005Form.getPdf());
+        }
         model.addAttribute("reId", reId);
 
         return "real-estate/detail/index";

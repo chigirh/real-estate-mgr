@@ -38,10 +38,15 @@ public class S0003Converter {
         model.setForeignerLiveSts(s0003Form.getForeignerLiveSts());
         model.setNote(s0003Form.getNote());
 
+
         try {
-            var pdfBinary = s0003Form.getUploadFile().getBytes();
-            var base64Pdf = Base64.getEncoder().encodeToString(pdfBinary);
-            model.setPdf(base64Pdf);
+            if (s0003Form.getUploadFile() != null && !s0003Form.getUploadFile().isEmpty()) {
+                var pdfBinary = s0003Form.getUploadFile().getBytes();
+                var base64Pdf = Base64.getEncoder().encodeToString(pdfBinary);
+                model.setPdf(base64Pdf);
+            } else {
+                model.setPdf("");
+            }
         } catch (IOException e) {
             throw new SystemError("system error.", e);
         }

@@ -1,14 +1,15 @@
 <div th:fragment="notice_fragment" xmlns:th="http://www.thymeleaf.org">
-    <div class="alert alert-info" th:if="${notice.isInfoNotEmpty}">
-        <strong th:text="${notice.info}"></strong>
+    <div class="alert alert-info" th:if="${notice.isInfoNotEmpty}" th:each="message : ${notice.info}">
+        <strong th:text="${message}"></strong>
     </div>
-    <div class="alert alert-success" th:if="${notice.isSuccessNotEmpty}">
-        <strong th:text="${notice.success}"></strong>
+    <div class="alert alert-success" th:if="${notice.isSuccessNotEmpty}" th:each="message : ${notice.success}">
+        <strong th:text="${message}"></strong>
     </div>
-    <div class="alert alert-warning" th:if="${notice.isWarnNotEmpty}">
-        <strong th:text="${notice.warn}"></strong>
+    <div class="alert alert-warning" th:if="${notice.isWarnNotEmpty}" th:each="message : ${notice.warn}">
+        <strong th:text="${message}"></strong>
     </div>
-    <div class="alert alert-danger" th:if="${notice.isErrorNotEmpty}">
-        <strong th:text="${notice.error}"></strong>
+    <div class="alert alert-danger" th:if="${notice.isErrorNotEmpty}" th:each="message : ${notice.error}">
+        <strong th:text="${message}"></strong>
     </div>
+    <div th:if="${notice.clear}"></div>
 </div>
