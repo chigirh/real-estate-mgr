@@ -57,6 +57,7 @@
             <th class="col-xs-1">管理会社TEL</th>
             <th class="col-xs-1">外国人入居可否</th>
             <th class="col-xs-1">更新日</th>
+            <th class="col-xs-10" th:if="${role.hasRole('ROLE_ADMIN')}"></th>
         </tr>
         </thead>
         <tbody>
@@ -72,6 +73,15 @@
             <td class="col-xs-2" th:text="${row.mgrCompanyTel}"></td>
             <td class="col-xs-2" th:text="${row.foreignerLiveSts}"></td>
             <td class="col-xs-2" th:text="${row.updatedAt}"></td>
+            <td th:if="${role.hasRole('ROLE_ADMIN') && row.pdf == null}">
+                <form class="container" th:action="@{/real-estate/list/update(reId=${row.reId})}" method="post"
+                      enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input class="form-control-file" type="file" name="uploadFile"/>
+                        <button class="btn btn-sm btn-outline-primary" type="submit">PDF登録</button>
+                    </div>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>

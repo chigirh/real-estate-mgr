@@ -2,8 +2,10 @@ package com.chigirh.eh.rem.web.controller;
 
 import com.chigirh.eh.rem.domain.common.AreasConst;
 import com.chigirh.eh.rem.domain.model.realestate.RealEstateSearchCondition;
+import com.chigirh.eh.rem.domain.port.RealEstatePdfUpdatePort;
 import com.chigirh.eh.rem.domain.port.RealEstateSearchPort;
 import com.chigirh.eh.rem.domain.service.realestate.RealEstateService;
+import com.chigirh.eh.rem.web.converter.PdfConverter;
 import com.chigirh.eh.rem.web.converter.S0004Converter;
 import com.chigirh.eh.rem.web.dto.S0004Form;
 import com.chigirh.eh.rem.web.dto.S0004TableRow;
@@ -18,11 +20,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * S0004(物件一覧画面).
@@ -34,8 +39,10 @@ public class S0004Controller {
     public static final String RESULT_FORMAT = "検索結果%s件(%s件目～%s件目を表示中)";
     private final RealEstateService realEstateService;
     private final RealEstateSearchPort realEstateSearchPort;
+    private final RealEstatePdfUpdatePort realEstatePdfUpdatePort;
 
     private final S0004Converter converter;
+    private final PdfConverter pdfConverter;
 
     private final Notice notice;
 
@@ -96,6 +103,33 @@ public class S0004Controller {
         s0004Condition.setSearched(true);
 
         return "real-estate/list/index";
+    }
+
+    @PostMapping("/real-estate/list/update")
+    public String upload(
+        @AuthenticationPrincipal OidcUser user,
+        @RequestParam("reId") String reId,
+        @RequestParam("uploadFile") MultipartFile uploadFile,
+        Model model
+    ) {
+
+        var pdf = pdfConverter.convert(uploadFile);
+
+        if (StringUtils.isEmpty(pdf)) {
+            notice.warn("pdfファイル未設定");
+            return "redirect:/real-estate/list?page=" + s0004Condition.getPageNumber();
+        }
+
+        var input = new RealEstatePdfUpdatePort.Input(reId, pdf);
+        var output = realEstatePdfUpdatePort.useCase(input);
+
+        if (output.result() < 1) {
+            notice.warn("PDF更新失敗");
+        } else {
+            notice.success("PDF更新成功");
+        }
+
+        return "redirect:/real-estate/list?page=" + s0004Condition.getPageNumber();
     }
 
     private Page<S0004TableRow> search(S0004Form s0004Form, Model model, Pageable pageable) {

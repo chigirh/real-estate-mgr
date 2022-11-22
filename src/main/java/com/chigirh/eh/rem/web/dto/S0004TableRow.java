@@ -16,4 +16,5 @@ public class S0004TableRow {
     private String mgrCompanyTel;
     private String foreignerLiveSts;
     private String updatedAt;
+    private String pdf;
 }

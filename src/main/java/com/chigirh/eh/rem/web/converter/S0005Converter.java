@@ -1,18 +1,20 @@
 package com.chigirh.eh.rem.web.converter;
 
-import com.chigirh.eh.rem.domain.error.SystemError;
 import com.chigirh.eh.rem.domain.model.realestate.RealEstate;
 import com.chigirh.eh.rem.domain.port.RealEstatcFetchPort;
 import com.chigirh.eh.rem.domain.port.RealEstateUpdatePort;
 import com.chigirh.eh.rem.web.dto.S0005Form;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Base64;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.util.StringUtils;
 
 @Component
+@RequiredArgsConstructor
 public class S0005Converter {
+
+    private final PdfConverter pdfConverter;
+
     public RealEstateUpdatePort.Input convert(String reId, S0005Form s0005Form) {
         var model = new RealEstate();
         model.setReId(reId);
@@ -40,17 +42,7 @@ public class S0005Converter {
         model.setForeignerLiveSts(s0005Form.getForeignerLiveSts());
         model.setNote(s0005Form.getNote());
 
-        try {
-            if (s0005Form.getUploadFile() != null && !s0005Form.getUploadFile().isEmpty()) {
-                var pdfBinary = s0005Form.getUploadFile().getBytes();
-                var base64Pdf = Base64.getEncoder().encodeToString(pdfBinary);
-                model.setPdf(base64Pdf);
-            } else {
-                model.setPdf(s0005Form.getPdf());
-            }
-        } catch (IOException e) {
-            throw new SystemError("system error.", e);
-        }
+        model.setPdf(pdfConverter.convert(s0005Form.getUploadFile()));
 
         return new RealEstateUpdatePort.Input(model);
     }

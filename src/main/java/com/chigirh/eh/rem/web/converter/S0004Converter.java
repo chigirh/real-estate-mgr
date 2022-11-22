@@ -5,6 +5,7 @@ import com.chigirh.eh.rem.web.dto.S0004TableRow;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 public class S0004Converter {
@@ -18,7 +19,8 @@ public class S0004Converter {
                     e.getMgrCompanyName(),
                     e.getMgrCompanyTel(),
                     e.getForeignerLiveSts(),
-                    DateTimeConverter.convertAtDateTime(e.getUpdatedAt())
+                    DateTimeConverter.convertAtDateTime(e.getUpdatedAt()),
+                    StringUtils.isEmpty(e.getPdf()) ? null : e.getPdf()
                 )
             ).collect(Collectors.toList());
     }
