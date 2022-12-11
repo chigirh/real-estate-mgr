@@ -60,21 +60,21 @@
         </div>
         <div class="form-group form-inline input-group-sm">
             <span class="col-md-2 text-md-right">家賃</span>
-            <input type="number" class="form-control col-sm-3" id="rentPrice" step="1000" th:field="*{rentPrice}">
+            <input type="number" class="form-control col-sm-3" id="rentPrice" step="10" th:field="*{rentPrice}">
             <span class="col-sm-2"></span>
             <span class="col-sm-10 text-danger small" th:if="${#fields.hasErrors('rentPrice')}"
                   th:errors="*{rentPrice}"></span>
         </div>
         <div class="form-group form-inline input-group-sm">
             <span class="col-md-2 text-md-right">共益費</span>
-            <input type="number" class="form-control col-sm-3" id="condoFee" step="1000" th:field="*{condoFee}">
+            <input type="number" class="form-control col-sm-3" id="condoFee" step="10" th:field="*{condoFee}">
             <span class="col-sm-10"></span>
             <span class="col-sm-10 text-danger small" th:if="${#fields.hasErrors('condoFee')}"
                   th:errors="*{rentPrice}"></span>
         </div>
         <div class="form-group form-inline input-group-sm">
             <span class="col-md-2 text-md-right">水町費</span>
-            <input type="number" class="form-control col-sm-3" id="waterFee" step="1000" th:field="*{waterFee}">
+            <input type="number" class="form-control col-sm-3" id="waterFee" step="10" th:field="*{waterFee}">
             <span class="col-sm-10"></span>
             <span class="col-sm-10 text-danger small" th:if="${#fields.hasErrors('waterFee')}"
                   th:errors="*{rentPrice}"></span>

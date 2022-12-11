@@ -13,8 +13,8 @@ import com.chigirh.eh.rem.infra.mapper.RealEstateMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
 
 @Repository
 @RequiredArgsConstructor
@@ -125,7 +125,11 @@ public class RealEstateRepositoryImpl implements RealEstateRepository {
         entity.setReId(model.getReId());
         entity.setReName(model.getReName());
         entity.setReNameKana(model.getReNameKana());
-        entity.setInitial(model.getReNameKana().substring(0, 1));
+        if (StringUtils.isEmpty(model.getReNameKana())) {
+            entity.setInitial("");
+        } else {
+            entity.setInitial(model.getReNameKana().substring(0, 1));
+        }
         entity.setAddress(model.getAddress());
         entity.setRentPrice(model.getRentPrice());
         entity.setCondoFee(model.getCondoFee());

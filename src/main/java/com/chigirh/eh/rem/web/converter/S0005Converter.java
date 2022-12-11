@@ -42,7 +42,11 @@ public class S0005Converter {
         model.setForeignerLiveSts(s0005Form.getForeignerLiveSts());
         model.setNote(s0005Form.getNote());
 
-        model.setPdf(pdfConverter.convert(s0005Form.getUploadFile()));
+        if (s0005Form.getUploadFile().isEmpty()) {
+            model.setPdf(s0005Form.getPdf());
+        } else {
+            model.setPdf(pdfConverter.convert(s0005Form.getUploadFile()));
+        }
 
         return new RealEstateUpdatePort.Input(model);
     }
