@@ -46,33 +46,34 @@
 
     <hr>
 
-    <table class="table table-fixed">
-        <thead class="sticky-top">
-        <tr>
-            <th class="col-xs-2"></th>
-            <th class="col-xs-2">物件名</th>
-            <th class="col-xs-4">住所</th>
-            <th class="col-xs-1">家賃</th>
-            <th class="col-xs-1">管理会社</th>
-            <th class="col-xs-1">管理会社TEL</th>
-            <th class="col-xs-1">外国人入居可否</th>
-            <th class="col-xs-1">更新日</th>
-            <th class="col-xs-10" th:if="${role.hasRole('ROLE_ADMIN')}"></th>
-        </tr>
+    <div class="table-responsive">
+        <table class="table text-nowrap">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">物件名</th>
+                <th scope="col">住所</th>
+                <th scope="col">家賃</th>
+                <th scope="col">管理会社</th>
+                <th scope="col">管理会社TEL</th>
+                <th scope="col">外国人入居可否</th>
+                <th scope="col">更新日</th>
+                <th scope="col" th:if="${role.hasRole('ROLE_ADMIN')}"></th>
+            </tr>
         </thead>
         <tbody>
 
         <tr th:each="row : ${rows}">
-            <td>
+            <th scope="row">
                 <a th:href="@{/real-estate/detail(reId=${row.reId})}">詳細</a>
-            </td>
-            <td class="col-xs-2" th:text="${row.reName}"></td>
-            <td class="col-xs-2" th:text="${row.address}"></td>
-            <td class="col-xs-2" th:text="${row.rentPrice}"></td>
-            <td class="col-xs-2" th:text="${row.mgrCompanyName}"></td>
-            <td class="col-xs-2" th:text="${row.mgrCompanyTel}"></td>
-            <td class="col-xs-2" th:text="${row.foreignerLiveSts}"></td>
-            <td class="col-xs-2" th:text="${row.updatedAt}"></td>
+            </th>
+            <td th:text="${row.reName}"></td>
+            <td th:text="${row.address}"></td>
+            <td th:text="${row.rentPrice}"></td>
+            <td th:text="${row.mgrCompanyName}"></td>
+            <td th:text="${row.mgrCompanyTel}"></td>
+            <td th:text="${row.foreignerLiveSts}"></td>
+            <td th:text="${row.updatedAt}"></td>
             <td th:if="${role.hasRole('ROLE_ADMIN') && row.pdf == null}">
                 <form class="container" th:action="@{/real-estate/list/update(reId=${row.reId})}" method="post"
                       enctype="multipart/form-data">
@@ -84,7 +85,8 @@
             </td>
         </tr>
         </tbody>
-    </table>
+        </table>
+    </div>
 
     <nav aria-label="Page navigation example" th:if="${page != null}">
         <ul class="pagination">
