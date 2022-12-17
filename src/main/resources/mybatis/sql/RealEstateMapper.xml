@@ -82,6 +82,9 @@
             <if test="condition.reName != null">
                 t1.re_name LIKE #{condition.reName}
             </if>
+            <if test="condition.mgrCompanyName != null">
+                t1.mgr_company_name LIKE #{condition.mgrCompanyName}
+            </if>
             <if test="condition.area != null">
                 AND t2.area = #{condition.area}
             </if>

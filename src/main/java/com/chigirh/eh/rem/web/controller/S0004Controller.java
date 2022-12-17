@@ -135,6 +135,7 @@ public class S0004Controller {
     private Page<S0004TableRow> search(S0004Form s0004Form, Model model, Pageable pageable) {
         var condition = new RealEstateSearchCondition();
         condition.setReName(s0004Form.getReName());
+        condition.setMgrCompanyName(s0004Form.getMgrCompanyName());
         condition.setArea(s0004Form.getArea());
         condition.setRentPrice(s0004Form.getRentPrice());
         condition.setForeignerLiveSts(s0004Form.getForeignerLiveSts());

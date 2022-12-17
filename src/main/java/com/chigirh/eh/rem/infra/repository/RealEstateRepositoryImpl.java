@@ -73,7 +73,13 @@ public class RealEstateRepositoryImpl implements RealEstateRepository {
     @DataAccess(process = "real_estate find.")
     public RealEstateSearchResult fetchByCondition(RealEstateSearchCondition condition) {
         var conditionEntity = new RealEstateMapper.Condition();
-        conditionEntity.setReName(StringUtils.isEmpty(condition.getReName()) ? null : condition.getReName() + "%");
+        if (!StringUtils.isEmpty(condition.getReName())) {
+            conditionEntity.setReName("%" + condition.getReName() + "%");
+        }
+
+        if (!StringUtils.isEmpty(condition.getMgrCompanyName())) {
+            conditionEntity.setMgrCompanyName("%" + condition.getMgrCompanyName() + "%");
+        }
 
         var area = AreasConst.DEFAULT.equals(condition.getArea()) ? null : condition.getArea();
         conditionEntity.setArea(area);

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RealEstateSearchCondition {
     private String reName;
+    private String mgrCompanyName;
     private String area;
     private Integer rentPrice;
     private String foreignerLiveSts;

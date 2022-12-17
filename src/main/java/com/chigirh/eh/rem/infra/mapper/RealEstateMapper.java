@@ -1,6 +1,5 @@
 package com.chigirh.eh.rem.infra.mapper;
 
-import com.chigirh.eh.rem.domain.repository.realestate.RealEstateRepository;
 import com.chigirh.eh.rem.infra.entity.RealEstateEntity;
 import java.util.List;
 import lombok.Data;
@@ -26,6 +25,7 @@ public interface RealEstateMapper {
     @NoArgsConstructor
     class Condition {
         private String reName;
+        private String mgrCompanyName;
         private String area;
         private Integer rentPrice;
         private String foreignerLiveSts;
