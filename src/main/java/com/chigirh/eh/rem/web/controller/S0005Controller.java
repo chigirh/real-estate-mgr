@@ -7,20 +7,24 @@ import com.chigirh.eh.rem.web.converter.S0005Converter;
 import com.chigirh.eh.rem.web.dto.S0005Form;
 import com.chigirh.eh.rem.web.dto.session.Notice;
 import com.chigirh.eh.rem.web.dto.session.S0004Condition;
+import java.io.IOException;
+import java.io.OutputStream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * S0005(物件詳細画面).
@@ -66,6 +70,35 @@ public class S0005Controller {
         model.addAttribute("reId", reId);
 
         return "real-estate/detail/index";
+    }
+
+    @PostMapping("/real-estate/detail/download")
+    public String pdfDownload(
+        @AuthenticationPrincipal OidcUser user,
+        @RequestParam("reId") String reId,
+        Model model,
+        HttpServletRequest rq,
+        HttpServletResponse response
+    ) {
+        var input = new RealEstatcFetchPort.Input(reId);
+        var output = realEstatcFetchPort.useCase(input);
+
+        try (OutputStream os = response.getOutputStream();) {
+
+            var fb = java.util.Base64.getDecoder().decode(output.result().getPdf());
+            response.setContentType("application/pdf");
+//            response.setHeader("Content-Disposition", "attachment; filename=" + reId + ".pdf");
+            response.setHeader("Content-Disposition", "inline;");
+            response.setContentLength(fb.length);
+            os.write(fb);
+            os.flush();
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+            notice.error(e.getMessage());
+        }
+
+        return null;
+
     }
 
     @PostMapping("/real-estate/detail")
