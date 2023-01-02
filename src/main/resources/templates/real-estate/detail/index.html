@@ -130,6 +130,12 @@
         <div class="text-center" th:if="${role.hasRole('ROLE_ADMIN')}">
             <button class="btn btn-sm btn-outline-primary" type="submit">更新</button>
         </div>
+        <hr>
+        <div class="text-center" th:if="${role.hasRole('ROLE_ADMIN')}">
+            <button class="btn btn-sm btn-outline-primary" type="submit"
+                    th:formaction="@{/real-estate/copy(reId=${reId})}">複製
+            </button>
+        </div>
     </form>
     <hr>
     <form class="container mb-15" th:action="@{/real-estate/delete(reId=${reId})}" method="post">

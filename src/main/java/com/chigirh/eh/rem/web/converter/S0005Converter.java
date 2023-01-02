@@ -2,6 +2,7 @@ package com.chigirh.eh.rem.web.converter;
 
 import com.chigirh.eh.rem.domain.model.realestate.RealEstate;
 import com.chigirh.eh.rem.domain.port.RealEstatcFetchPort;
+import com.chigirh.eh.rem.domain.port.RealEstateCreatePort;
 import com.chigirh.eh.rem.domain.port.RealEstateUpdatePort;
 import com.chigirh.eh.rem.web.dto.S0005Form;
 import java.util.ArrayList;
@@ -15,7 +16,15 @@ public class S0005Converter {
 
     private final PdfConverter pdfConverter;
 
-    public RealEstateUpdatePort.Input convert(String reId, S0005Form s0005Form) {
+    public RealEstateCreatePort.Input convertForCreatePort(String reId, S0005Form s0005Form) {
+        return new RealEstateCreatePort.Input(convert(reId, s0005Form));
+    }
+    
+    public RealEstateUpdatePort.Input convertForUpdatePort(String reId, S0005Form s0005Form) {
+        return new RealEstateUpdatePort.Input(convert(reId, s0005Form));
+    }
+
+    public RealEstate convert(String reId, S0005Form s0005Form) {
         var model = new RealEstate();
         model.setReId(reId);
         model.setReName(s0005Form.getReName());
@@ -48,7 +57,7 @@ public class S0005Converter {
             model.setPdf(pdfConverter.convert(s0005Form.getUploadFile()));
         }
 
-        return new RealEstateUpdatePort.Input(model);
+        return model;
     }
 
     public void convert(S0005Form form, RealEstatcFetchPort.Output output) {

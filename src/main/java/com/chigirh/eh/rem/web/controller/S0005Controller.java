@@ -2,6 +2,7 @@ package com.chigirh.eh.rem.web.controller;
 
 import com.chigirh.eh.rem.domain.port.RealEstatcDeletePort;
 import com.chigirh.eh.rem.domain.port.RealEstatcFetchPort;
+import com.chigirh.eh.rem.domain.port.RealEstateCreatePort;
 import com.chigirh.eh.rem.domain.port.RealEstateUpdatePort;
 import com.chigirh.eh.rem.web.converter.S0005Converter;
 import com.chigirh.eh.rem.web.dto.S0005Form;
@@ -34,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor
 public class S0005Controller {
 
+    private final RealEstateCreatePort realEstateCreatePort;
     private final RealEstatcFetchPort realEstatcFetchPort;
     private final RealEstateUpdatePort realEstateUpdatePort;
     private final RealEstatcDeletePort realEstatcDeletePort;
@@ -113,7 +115,7 @@ public class S0005Controller {
             return "real-estate/detail/index";
         }
 
-        var input = converter.convert(reId, s0005Form);
+        var input = converter.convertForUpdatePort(reId, s0005Form);
         var output = realEstateUpdatePort.useCase(input);
 
         if (0 < output.result()) {
@@ -123,6 +125,27 @@ public class S0005Controller {
         }
 
         return "redirect:/real-estate/list?page=" + s0004Condition.getPageNumber();
+
+    }
+
+    @PostMapping("/real-estate/copy")
+    public String copy(
+        @AuthenticationPrincipal OidcUser user,
+        @RequestParam("reId") String reId,
+        @Validated @ModelAttribute S0005Form s0005Form,
+        BindingResult result,
+        Model model
+    ) {
+        if (result.hasErrors()) {
+            return "real-estate/detail/index";
+        }
+
+        var input = converter.convertForCreatePort(reId, s0005Form);
+        var output = realEstateCreatePort.useCase(input);
+
+        notice.success("複製成功");
+
+        return "redirect:/real-estate/detail?reId=" + output.result();
 
     }
 
