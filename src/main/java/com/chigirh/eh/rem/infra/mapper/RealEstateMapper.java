@@ -17,6 +17,8 @@ public interface RealEstateMapper {
 
     int deleteByKey(@Param("reId") String reId);
 
+    List<RealEstateEntity> findAll(@Param("offset") int offset);
+
     List<RealEstateEntity> findByCondition(@Param("condition") Condition condition);
 
     int countByCondition(@Param("condition") Condition condition);

@@ -71,6 +71,26 @@ public class RealEstateRepositoryImpl implements RealEstateRepository {
 
     @Override
     @DataAccess(process = "real_estate find.")
+    public RealEstateSearchResult fetchAll(int offset) {
+        var results = realEstateMapper.findAll(offset);
+
+        var model = new RealEstateSearchResult();
+        model.setRecord(results.stream()
+            .map(e -> {
+                    var m = toModel(e);
+                    // area
+                    var areaEntities = realEstateAreaMapper.findByReId(e.getReId());
+                    var areas = areaEntities.stream().map(RealEstateAreaEntity::getArea).collect(Collectors.toList());
+                    m.setAreas(areas);
+                    return m;
+                }
+            ).collect(Collectors.toList()));
+        model.setTotal(0);
+        return model;
+    }
+
+    @Override
+    @DataAccess(process = "real_estate find.")
     public RealEstateSearchResult fetchByCondition(RealEstateSearchCondition condition) {
         var conditionEntity = new RealEstateMapper.Condition();
         if (!StringUtils.isEmpty(condition.getReName())) {
