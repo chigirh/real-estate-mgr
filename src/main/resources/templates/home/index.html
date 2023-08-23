@@ -43,6 +43,25 @@
                 <p class="card-text">物件の一覧を検索する</p>
             </div>
         </div>
+        <div class="card" th:if="${role.hasRole('ROLE_ADMIN')}">
+            <a class="nav-link text-dark" href="/fx/oanda_chart">
+                <img th:src="@{/image/s0002_card2.jpg}" class="card-img-top" alt="...">
+            </a>
+            <div class="card-body">
+                <h5 class="card-title">過去チャート登録</h5>
+                <p class="card-text">過去のチャートを登録する</p>
+            </div>
+        </div>
+
+        <div class="card" th:if="${role.hasRole('ROLE_ADMIN')}">
+            <a class="nav-link text-dark" href="/fx/analyze">
+                <img th:src="@{/image/s0002_card2.jpg}" class="card-img-top" alt="...">
+            </a>
+            <div class="card-body">
+                <h5 class="card-title">過去チャート分析</h5>
+                <p class="card-text">過去のチャートから分析する</p>
+            </div>
+        </div>
 </div>
 </body>
 </html>

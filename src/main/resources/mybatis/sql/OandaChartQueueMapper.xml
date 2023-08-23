@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chigirh.eh.fx.infra.mapper.OandaChartQueueMapper">
+    <insert id="insert">
+        INSERT INTO `oanda_chart_queue` (
+            `uuid`,
+            `date_time`,
+            `open`,
+            `high`,
+            `low`,
+            `close`,
+            `volume`,
+            `volume_ma`
+        ) VALUES
+        <foreach collection="entities" item="entity" separator=",">
+        (
+            #{entity.uuid},
+            #{entity.dateTime},
+            #{entity.open},
+            #{entity.high},
+            #{entity.low},
+            #{entity.close},
+            #{entity.volume},
+            #{entity.volumeMa}
+        )
+        </foreach>
+    </insert>
+
+    <select id="find"
+            resultType="com.chigirh.eh.fx.infra.model.mysql.OandaChartQueueEntity">
+        SELECT
+            `uuid`,
+            `date_time`,
+            `open`,
+            `high`,
+            `low`,
+            `close`,
+            `volume`,
+            `volume_ma`
+        FROM `oanda_chart_queue`
+        ORDER BY `date_time`
+        LIMIT #{limit}
+    </select>
+
+    <delete id="deleteByKey">
+        DELETE FROM `oanda_chart_queue`
+        WHERE `uuid` IN
+        <foreach collection="entities" item="entity" separator="," open="(" close=")">
+            #{entity.uuid}
+        </foreach>
+    </delete>
+</mapper>

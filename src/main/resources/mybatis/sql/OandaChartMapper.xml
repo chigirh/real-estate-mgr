@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chigirh.eh.fx.infra.mapper.OandaChartMapper">
+    <insert id="insert">
+        INSERT INTO `oanda_chart` (
+            `id`,
+            `date_time`,
+            `day`,
+            `open`,
+            `high`,
+            `low`,
+            `close`,
+            `volume`,
+            `volume_ma`,
+            `prev_5_minutes_id`,
+            `next_5_minutes_id`,
+            `rate_change_open_5_minutes`,
+            `fluctuation_open_5_minutes`,
+            `rate_change_close_5_minutes`,
+            `fluctuation_close_5_minutes`,
+            `rate_change_high_5_minutes`,
+            `fluctuation_high_5_minutes`,
+            `rate_change_low_5_minutes`,
+            `fluctuation_low_5_minutes`
+        ) VALUES (
+            #{entity.id},
+            #{entity.dateTime},
+            #{entity.day},
+            #{entity.open},
+            #{entity.high},
+            #{entity.low},
+            #{entity.close},
+            #{entity.volume},
+            #{entity.volumeMa},
+            #{entity.prev5MinutesId},
+            #{entity.next5MinutesId},
+            #{entity.rateChangeOpen5Minutes},
+            #{entity.fluctuationOpen5Minutes},
+            #{entity.rateChangeClose5Minutes},
+            #{entity.fluctuationClose5Minutes},
+            #{entity.rateChangeHigh5Minutes},
+            #{entity.fluctuationHigh5Minutes},
+            #{entity.rateChangeLow5Minutes},
+            #{entity.fluctuationLow5Minutes}
+        ) ON DUPLICATE KEY UPDATE
+            `open` = VALUES(open),
+            `high` = VALUES(high),
+            `low` = VALUES(low),
+            `close` = VALUES(close),
+            `volume` = VALUES(volume),
+            `volume_ma` = VALUES(volume_ma),
+            `rate_change_open_5_minutes` = VALUES(rate_change_open_5_minutes),
+            `fluctuation_open_5_minutes` = VALUES(fluctuation_open_5_minutes),
+            `rate_change_close_5_minutes` = VALUES(rate_change_close_5_minutes),
+            `fluctuation_close_5_minutes` = VALUES(fluctuation_close_5_minutes),
+            `rate_change_high_5_minutes` = VALUES(rate_change_high_5_minutes),
+            `fluctuation_high_5_minutes` = VALUES(fluctuation_high_5_minutes),
+            `rate_change_low_5_minutes` = VALUES(rate_change_low_5_minutes),
+            `fluctuation_low_5_minutes` = VALUES(fluctuation_low_5_minutes)
+    </insert>
+
+    <update id="updateByKey">
+        update `oanda_chart`
+        <set>
+            <if test="entity.rateChangeOpen5Minutes != null">rate_change_open_5_minutes = #{entity.rateChangeOpen5Minutes},</if>
+            <if test="entity.fluctuationOpen5Minutes != null">fluctuation_open_5_minutes = #{entity.fluctuationOpen5Minutes},</if>
+            <if test="entity.rateChangeClose5Minutes != null">rate_change_close_5_minutes = #{entity.rateChangeClose5Minutes},</if>
+            <if test="entity.fluctuationClose5Minutes != null">fluctuation_close_5_minutes = #{entity.fluctuationClose5Minutes},</if>
+            <if test="entity.rateChangeHigh5Minutes != null">rate_change_high_5_minutes = #{entity.rateChangeHigh5Minutes},</if>
+            <if test="entity.fluctuationHigh5Minutes != null">fluctuation_high_5_minutes = #{entity.fluctuationHigh5Minutes},</if>
+            <if test="entity.rateChangeLow5Minutes != null">rate_change_low_5_minutes = #{entity.rateChangeLow5Minutes},</if>
+            <if test="entity.fluctuationLow5Minutes != null">fluctuation_low_5_minutes = #{entity.fluctuationLow5Minutes}</if>
+        </set>
+        where id = #{entity.id}
+    </update>
+
+    <select id="findByKey"
+            resultType="com.chigirh.eh.fx.infra.model.mysql.OandaChartEntity">
+        SELECT
+            `id`,
+            `date_time`,
+            `day`,
+            `open`,
+            `high`,
+            `low`,
+            `close`,
+            `volume`,
+            `volume_ma`,
+            `prev_5_minutes_id`,
+            `next_5_minutes_id`,
+            `rate_change_open_5_minutes`,
+            `fluctuation_open_5_minutes`,
+            `rate_change_close_5_minutes`,
+            `fluctuation_close_5_minutes`,
+            `rate_change_high_5_minutes`,
+            `fluctuation_high_5_minutes`,
+            `rate_change_low_5_minutes`,
+            `fluctuation_low_5_minutes`
+        FROM `oanda_chart`
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByBeforeRateChangeBetweens"
+            resultType="com.chigirh.eh.fx.infra.model.mysql.OandaChartEntity">
+        SELECT
+        `id`,
+        `date_time`,
+        `day`,
+        `open`,
+        `high`,
+        `low`,
+        `close`,
+        `volume`,
+        `volume_ma`,
+        `prev_5_minutes_id`,
+        `next_5_minutes_id`,
+        `rate_change_open_5_minutes`,
+        `fluctuation_open_5_minutes`,
+        `rate_change_close_5_minutes`,
+        `fluctuation_close_5_minutes`,
+        `rate_change_high_5_minutes`,
+        `fluctuation_high_5_minutes`,
+        `rate_change_low_5_minutes`,
+        `fluctuation_low_5_minutes`
+        FROM `oanda_chart`
+        WHERE `rate_change_open_5_minutes` BETWEEN #{lower} AND #{upper}
+    </select>
+
+    <select id="findByBeforeRateChangeBetween"
+            resultType="com.chigirh.eh.fx.infra.model.mysql.OandaChartEntity">
+        SELECT
+            `id`,
+            `date_time`,
+            `day`,
+            `open`,
+            `high`,
+            `low`,
+            `close`,
+            `volume`,
+            `volume_ma`,
+            `prev_5_minutes_id`,
+            `next_5_minutes_id`,
+            `rate_change_open_5_minutes`,
+            `fluctuation_open_5_minutes`,
+            `rate_change_close_5_minutes`,
+            `fluctuation_close_5_minutes`,
+            `rate_change_high_5_minutes`,
+            `fluctuation_high_5_minutes`,
+            `rate_change_low_5_minutes`,
+            `fluctuation_low_5_minutes`
+        FROM `oanda_chart`
+        WHERE `id` = #{id}
+            AND `rate_change_open_5_minutes` BETWEEN #{lower} AND #{upper}
+    </select>
+
+</mapper>

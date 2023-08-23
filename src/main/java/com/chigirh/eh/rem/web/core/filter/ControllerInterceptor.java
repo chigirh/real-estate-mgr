@@ -26,7 +26,7 @@ public class ControllerInterceptor {
     private final FacadeDelegator facadeDelegator;
     private final Notice notice;
 
-    @Before("execution(* com.chigirh.eh.rem.web.controller.*Controller.*(..))")
+    @Before("execution(* com.chigirh.eh.*..web.controller.*Controller.*(..))")
     public void setRoleIntercept(JoinPoint pjp) {
 
         var argNames = ((CodeSignature) pjp.getSignature()).getParameterNames();

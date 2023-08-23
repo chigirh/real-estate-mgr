@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chigirh.eh.fx.infra.mapper.RateMapper">
+    <insert id="insert">
+        INSERT INTO `rate` (
+            `id`,
+            `date_time`,
+            `day`,
+            `bid`,
+            `ask`,
+            `open`,
+            `high`,
+            `low`,
+            `prev_1_minutes_id`,
+            `prev_5_minutes_id`,
+            `next_1_minutes_id`,
+            `next_5_minutes_id`,
+            `rate_change_bid_1_minutes`,
+            `rate_change_bid_5_minutes`,
+            `fluctuation_bid_1_minutes`,
+            `fluctuation_bid_5_minutes`,
+            `rate_change_ask_1_minutes`,
+            `rate_change_ask_5_minutes`,
+            `fluctuation_ask_1_minutes`,
+            `fluctuation_ask_5_minutes`
+        ) VALUES (
+            #{entity.id},
+            #{entity.dateTime},
+            #{entity.day},
+            #{entity.bid},
+            #{entity.ask},
+            #{entity.open},
+            #{entity.high},
+            #{entity.low},
+            #{entity.prev1MinutesId},
+            #{entity.prev5MinutesId},
+            #{entity.next1MinutesId},
+            #{entity.next5MinutesId},
+            #{entity.rateChangeBid1Minutes},
+            #{entity.rateChangeBid5Minutes},
+            #{entity.fluctuationBid1Minutes},
+            #{entity.fluctuationBid5Minutes},
+            #{entity.rateChangeAsk1Minutes},
+            #{entity.rateChangeAsk5Minutes},
+            #{entity.fluctuationAsk1Minutes},
+            #{entity.fluctuationAsk5Minutes}
+        )
+    </insert>
+
+    <select id="findByKey"
+            resultType="com.chigirh.eh.fx.infra.model.mysql.RateEntity">
+        SELECT
+            `id`,
+            `date_time`,
+            `day`,
+            `bid`,
+            `ask`,
+            `open`,
+            `high`,
+            `low`,
+            `prev_1_minutes_id`,
+            `prev_5_minutes_id`,
+            `next_1_minutes_id`,
+            `next_5_minutes_id`,
+            `rate_change_bid_1_minutes`,
+            `rate_change_bid_5_minutes`,
+            `fluctuation_bid_1_minutes`,
+            `fluctuation_bid_5_minutes`,
+            `rate_change_ask_1_minutes`,
+            `rate_change_ask_5_minutes`,
+            `fluctuation_ask_1_minutes`,
+            `fluctuation_ask_5_minutes`
+        FROM `rate`
+        WHERE `id` = #{id}
+    </select>
+
+    <select id="findByLatestBefore"
+            resultType="com.chigirh.eh.fx.infra.model.mysql.RateEntity">
+        SELECT
+            `id`,
+            `date_time`,
+            `day`,
+            `bid`,
+            `ask`,
+            `open`,
+            `high`,
+            `low`,
+            `prev_1_minutes_id`,
+            `prev_5_minutes_id`,
+            `next_1_minutes_id`,
+            `next_5_minutes_id`,
+            `rate_change_bid_1_minutes`,
+            `rate_change_bid_5_minutes`,
+            `fluctuation_bid_1_minutes`,
+            `fluctuation_bid_5_minutes`,
+            `rate_change_ask_1_minutes`,
+            `rate_change_ask_5_minutes`,
+            `fluctuation_ask_1_minutes`,
+            `fluctuation_ask_5_minutes`
+        FROM `rate`
+        WHERE `date_time` &lt;= #{dateTime}
+        ORDER BY `date_time` desc
+        LIMIT 1
+    </select>
+</mapper>

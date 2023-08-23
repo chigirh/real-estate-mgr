@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/luxon@1.26.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.1/dist/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0"></script>
+    <script th:src="@{/js/chartjs-chart-financial.js}"></script>
+
+    <title>FX分析</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="common/header :: header_fragment"></div>
+<div class="container">
+    <div th:replace="common/notice :: notice_fragment"></div>
+
+    <div th:each="analyzeChart, elementStat : ${analyzeCharts}">
+        <canvas th:id="'analyzeChat'+ ${elementStat.index}"></canvas>
+        <hr>
+    </div>
+
+    <script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+
+    const raw = /*[[ ${analyzeCharts} ]]*/
+    raw.forEach((element, index) => {
+        var candles = []
+        element.analyzeChart.forEach(a => {
+            var date = luxon.DateTime.fromFormat(a.x, 'yyyyMMddhhmmss')
+            candles.push(
+                {
+                    x: date.valueOf(),
+                    o: a.o,
+                    h: a.h,
+                    l: a.l,
+                    c: a.c
+                }
+            )
+        });
+
+        var ctx = document.getElementById("analyzeChat" + index).getContext('2d');
+        var chart = new Chart(ctx, {
+                type: 'candlestick',
+                data: {
+                    datasets: [
+                        {
+                        label: element.title,
+                        data: candles,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    elements: {
+                        point: {
+                            radius: 0
+                        }
+                    }
+                }
+        });
+    })
+    /*]]>*/
+
+    </script>
+</div>
+</body>
+</html>
